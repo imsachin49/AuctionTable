@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema({
+const playerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -15,24 +15,24 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     startTime: {
-        type: Date,
+        type: Number, // Number for Unix timestamps
         required: true
     },
     endTime: {
-        type: Date,
+        type: Number, // Number for Unix timestamps
         required: true
     },
     startPrice: {
         type: Number,
         required: true
     },
-    status: {
+    status:{
         type: String,
-        enum: ['open', 'closed'],
+        enum: ['upcoming', 'ongoing', 'finished'],
         default: 'open'
     }
 },
     { timestamps: true }
 )
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Player", playerSchema);
