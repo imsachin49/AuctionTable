@@ -6,6 +6,11 @@ const bidSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    playerId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Player',
+        required: true
+    },
     bidAmount: {
         type: Number,
         required: true

@@ -46,8 +46,8 @@ const addNewPlayer = asyncHandler(async (req, res) => {
         const newPlayer = new Player({
             name,
             description,
-            startTime: convertTimeToTimestamp(startTime),
-            endTime: convertTimeToTimestamp(endTime),
+            startTime,
+            endTime,
             startPrice,
             sellerId
         });
@@ -129,7 +129,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
             if (startTime < now) {
                 throw new ApiError(401, "Start time must be in the future");
             } else {
-                updateFields.startTime = convertTimeToTimestamp(startTime);
+                updateFields.startTime = startTime;
             }
         }
         // check if the end time is in the future
@@ -137,7 +137,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
             if (endTime < now) {
                 throw new ApiError(401, "End time must be in the future");
             } else {
-                updateFields.endTime = convertTimeToTimestamp(endTime);
+                updateFields.endTime = endTime;
             }
         }
         // check if the start price is greater than 0
