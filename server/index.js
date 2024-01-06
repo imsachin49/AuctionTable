@@ -17,6 +17,8 @@ app.use(express.static("public"));
 app.use(cookieParser());
 app.use(cors());
 
+// console.log(new Date().getTime());
+
 // routers
 app.use('/api/auth',authRoutes);
 app.use('/api/player',playerRoutes);

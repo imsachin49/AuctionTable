@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {registerUser,loginUser,updateUserDetails,forgetPassword,resetPassword}=require('../controllers/auth');
+const {registerUser,loginUser,updateUserDetails,forgetPassword,resetPassword,getAllUsers}=require('../controllers/auth');
 const {verifyToken}=require('../middlewares/verify')
 
 // Register user
@@ -17,5 +17,8 @@ router.post('/forget-password',forgetPassword);
 
 // Reset Password
 router.post('/reset-password/:id/:token',resetPassword);
+
+// get all users
+router.get('/all',getAllUsers);
 
 module.exports=router;

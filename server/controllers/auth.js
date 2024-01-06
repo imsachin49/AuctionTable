@@ -207,4 +207,10 @@ const resetPassword = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { registerUser, loginUser, updateUserDetails, forgetPassword, resetPassword };
+// get all users
+const getAllUsers = asyncHandler(async (req, res) => {
+    const users = await User.find({}).select("-password");
+    res.status(200).json(new ApiResponse(200, users, "All Users"));
+});
+
+module.exports = { registerUser, loginUser, updateUserDetails, forgetPassword, resetPassword,getAllUsers};

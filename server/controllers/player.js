@@ -209,11 +209,49 @@ const updatePlayer = asyncHandler(async (req, res) => {
     }
 });
 
-// Search by player name/description/seller name/type etc..
+// get Player by Id
+const getPlayerById=asyncHandler(async(req,res)=>{
+    if(!req.params.id) throw new ApiError(401,"player Id not Found");
+    try {
+        const player=await Player.findById(req.params.id);
+        res.status(200).json(new ApiResponse(201,player,"Player Found SuccessFull"));
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(500,error.message,"Internal Serevr Error");
+    }
+});
+
+// Search by player name/description/seller name/type etc
+const searchPlayer = asyncHandler(async (req, res) => {
+    const searchQuery = {};
+
+    for (const key in req.query) {
+        if (req.query.hasOwnProperty(key) && req.query[key] !== '') {
+            if (key === 'name' || key === 'description' || key === 'startTime' || key === 'endTime' || key === 'startPrice' || key === 'status') {
+                searchQuery[key] = { $regex: req.query[key], $options: 'i' };
+            }
+        }
+    }
+
+    try {
+        console.log(searchQuery);
+        // filter on the basis of time..
+        const player=await Player.find(searchQuery);
+        res.status(200).json(new ApiResponse(201, player, "done.."));
+    } catch (error){
+        console.log(error);
+        throw new ApiError(500, error.message, "something went wrong");
+    }
+});
+
+// Filter on the basis of startTime and EndTime.
+// const startEndTimeFilter=asyncHandle(async(req,res)=>{})
 
 module.exports = {
     addNewPlayer,
     deletePlayer,
     getAllPlayers,
-    updatePlayer
+    updatePlayer,
+    searchPlayer,
+    getPlayerById
 }

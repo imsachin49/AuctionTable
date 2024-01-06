@@ -26,11 +26,15 @@ const playerSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    status:{
+    status: {
         type: String,
         enum: ['upcoming', 'ongoing', 'finished'],
-        default: 'open'
-    }
+        default: 'upcoming'
+    },
+    winnerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
 },
     { timestamps: true }
 )
