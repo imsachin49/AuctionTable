@@ -7,11 +7,11 @@ const { convertTimeToTimestamp, convertTimeStampToTime } = require('../utils/tim
 
 // add a new player
 const addNewPlayer = asyncHandler(async (req, res) => {
-    const { name, description, startTime, endTime, startPrice } = req.body;
+    const { name, description, startTime, endTime, startPrice,picture } = req.body;
     const sellerId = req.user.id;
 
     try {
-        if (!name || !description || !startTime || !endTime || !startPrice) {
+        if (!name || !description || !startTime || !endTime || !startPrice || !picture) {
             throw new ApiError(401, "All Fields are required !!");
         }
 
@@ -49,6 +49,7 @@ const addNewPlayer = asyncHandler(async (req, res) => {
             startTime,
             endTime,
             startPrice,
+            picture,
             sellerId
         });
 
@@ -114,7 +115,7 @@ const getAllPlayers = asyncHandler(async (req, res) => {
 // update a player
 const updatePlayer = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { name, description, startTime, endTime, startPrice } = req.body;
+    const { name, description, startTime, endTime, startPrice,picture } = req.body;
     const userId = req.user.id;
 
     try {
@@ -124,6 +125,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
 
         if (name) updateFields.name = name;
         if (description) updateFields.description = description;
+        if (picture) updateFields.picture = picture;
         // check if the start time is in the future
         if (startTime) {
             if (startTime < now) {

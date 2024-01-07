@@ -9,10 +9,8 @@ const cookieParser=require('cookie-parser');
 const authRoutes=require('./routes/auth');
 const playerRoutes=require('./routes/player');
 const bidRoutes=require('./routes/bid');
-const {convertTimeToTimestamp,convertTimeStampToTime}=require('./utils/timeConversions')
 
 connectDB();
-console.log(convertTimeStampToTime(1704522032000));
 
 // MiddleWares..
 app.use(express.json({limit: "16kb"}));
