@@ -5,5 +5,5 @@
 2. Future Prospect could be adding a User Wallet/balance.  
 3. Think when/how to mark the ongoing etc. basically starting point??  
 4. Maybe Check if User Registered to participate in auction
-5. Remove playerId from Bid
+5. Remove playerId from Bid.
 6. Socket Configuration will be Player Specific.
