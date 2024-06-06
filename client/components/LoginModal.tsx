@@ -1,14 +1,15 @@
 "use client";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-import { Button } from "./ui/button";
-import { BiUpload } from "react-icons/bi";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/Dialog";
+import { Button } from "./ui/Button";
 import { LuLogIn } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
+import { useSession, signIn, signOut } from "next-auth/react"
 
-const UploadButton = () => {
+const LoginButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { data: session } = useSession();
 
   return (
     <Dialog
@@ -41,14 +42,14 @@ const UploadButton = () => {
             <p className="text-sm text-gray-500">to continue to platform</p>
           </div>
           <div className="space-y-2">
-            <div className="flex gap-3 border p-2 items-center pl-4 rounded-md border-blue-100 cursor-pointer hover:bg-[#f1f5f9]">
+            <button onClick={() => signIn('google')} className="flex w-full gap-3 border p-2 items-center pl-4 rounded-md border-blue-100 cursor-pointer hover:bg-[#f1f5f9]">
               <FcGoogle size={22} />
               <span className="text-black text-sm">Continue with Google</span>
-            </div>
-            <div className="flex gap-3 border p-2 items-center pl-4 rounded-md border-blue-100 cursor-pointer hover:bg-[#f1f5f9]">
+            </button>
+            <button onClick={() => signIn('github')} className="flex w-full gap-3 border p-2 items-center pl-4 rounded-md border-blue-100 cursor-pointer hover:bg-[#f1f5f9]">
               <FaGithub size={22} />
               <span className="text-black text-sm">Continue with Github</span>
-            </div>
+            </button>
           </div>
           <div className="text-[13px] px-1 text-gray-500 font-candara">
             By creating an account, you agree to our{" "}
@@ -66,4 +67,4 @@ const UploadButton = () => {
   );
 };
 
-export default UploadButton;
+export default LoginButton;
