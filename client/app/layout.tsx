@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 const open = Open_Sans({ subsets: ["latin"] });
 import SessionWrapper from "@/components/SessionWrapper";
+import {SWRProvider} from "@/components/swr-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,9 +16,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <SessionWrapper>
-      <html lang="en">
-        <body className={open.className}>{children}</body>
-      </html>
+      <SWRProvider>
+        <html lang="en">
+          <body className={open.className}>{children}</body>
+        </html>
+      </SWRProvider>
     </SessionWrapper>
   );
 }

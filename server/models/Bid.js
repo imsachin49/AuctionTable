@@ -14,7 +14,7 @@ const bidSchema = new mongoose.Schema({
     bidAmount: {
         type: Number,
         required: true
-    },
+    },  
     bidingTime: {
         type: Number,
         required: true

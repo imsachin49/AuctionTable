@@ -10,10 +10,10 @@ router.post('/',verifyTokenAndseller,addNewPlayer);
 router.delete('/:id',verifyTokenAndseller,deletePlayer);
 
 // get all Players..
-router.get('/',verifyTokenAndAdmin,getAllPlayers);
+router.get('/',getAllPlayers);
 
 // update a Player..
-router.patch('/:id',verifyTokenAndseller,updatePlayer);
+router.patch('/:id',updatePlayer);
 
 // find player by id
 router.get('/:id',getPlayerById);

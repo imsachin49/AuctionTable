@@ -9,7 +9,7 @@ const { convertTimeToTimestamp, convertTimeStampToTime } = require('../utils/tim
 const createNewBid = asyncHandler(async (req, res) => {
     const { playerId, bidAmount } = req.body;
     const bidderId = req.user.id;
-        
+    
     try {
         if (!playerId || !bidAmount) {
             throw new ApiError(400, 'All fields are required');
@@ -18,9 +18,7 @@ const createNewBid = asyncHandler(async (req, res) => {
         if (!player) {
             throw new ApiError(404, 'Player not found');
         }
-        if (player.status !== 'ongoing') {
-            throw new ApiError(400, 'Player is not available as of Now');
-        }
+
         const user = await User.findById(bidderId);
         if (!user) {
             throw new ApiError(404, 'User not found');
@@ -29,17 +27,18 @@ const createNewBid = asyncHandler(async (req, res) => {
         if (bidAmount < player.startPrice) {
             throw new ApiError(400, 'Bid amount should be greater than the start price');
         }
+
         // find the bids on a player and sort them in descending order of bid amount
         const bids = await Bid.find({ playerId }).sort({ bidAmount: -1 });
         if (bids.length > 0 && bids[0].bidAmount >= bidAmount) {
             throw new ApiError(400, 'Bid amount should be greater than the previous bid amount');
         }
+
         // check if the user has enough balance to place the bid
         if (user.balance < bidAmount) {
             throw new ApiError(400, 'Insufficient balance');
         }
         // its admin's duty to postpone/prepone the end time if demand is high or low
-        // by setting the status to 'finished' or adjusting the end time/start time...
         const bidingTime=new Date().getTime();
         if (bidingTime > player.endTime) {
             throw new ApiError(400, 'Bidding time should be before the end time');
@@ -52,7 +51,6 @@ const createNewBid = asyncHandler(async (req, res) => {
         });
         // add the bidId to the Player's bids array
         await Player.findByIdAndUpdate(playerId, { $push: { bids: bid._id } });
-        // await User.findByIdAndUpdate(bidderId, { balance: user.balance - bidAmount });
         res.status(201).json(new ApiResponse(201, bid, 'Bid added successfully'));
     } catch (error) {
         throw new ApiError(500, error.message || 'Internal server error');
@@ -133,9 +131,6 @@ const getWinningBidOnPlayer = asyncHandler(async (req, res) => {
         const player = await Player.findById(playerId);
         if (!player) {
             throw new ApiError(404, 'Player not found');
-        }
-        if (player.status === 'ongoing') {
-            throw new ApiError(400, 'Winner is not yet decided ! Auction Window is still open');
         }
         const bids = await Bid.find({ playerId }).sort({ bidAmount: -1 }).limit(1).populate('bidderId','-password');
         // check if the player is sold or not

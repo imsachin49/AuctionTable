@@ -169,16 +169,6 @@ const updatePlayer = asyncHandler(async (req, res) => {
             throw new ApiError(404, "Player not found");
         }
 
-        // Check if the player is not finished
-        if (player.status === "finished") {
-            throw new ApiError(405, "You can't update a player whose biding is finished");
-        }
-
-        // Check if the player is not ongoing
-        if (player.status === "ongoing") {
-            throw new ApiError(406, "You can't update a player whose biding is ongoing");
-        }
-
         // if only startTime was provided then check if it is before endTime
         if (startTime && !endTime) {
             if (startTime > player.endTime) {

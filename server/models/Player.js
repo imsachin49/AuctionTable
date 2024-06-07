@@ -9,9 +9,9 @@ const playerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    picture:{
+    picture: {
         type: String,
-        required: true
+        // required: true
     },
     sellerId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -30,16 +30,18 @@ const playerSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    status: {
-        type: String,
-        enum: ['upcoming', 'ongoing', 'finished'],
-        default: 'upcoming'
+    currentPrice: {
+        type: Number,
+        required: true,
+        default: function () {
+            return this.startPrice;
+        }
     },
     winnerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    bids:[
+    bids: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Bid'
