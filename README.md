@@ -6,8 +6,10 @@
 1. Add Queues for the AuctionEnd and AuctionStart.
 2. Explore Pub/Sub for the same.
 3. Utilise redis for making the Auction more Real-time and Scalable.
-4. Fix the number of hooks rendered is more issue.
+4. Fix the number of hooks rendered is more issue (commented the code).
 5. Check the timing issue in the AuctionEnd.
+6. Adding live auction at the landing page.
+7. Implement debouncing for the search bar.
 
 ## How to run the project
 1. Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`
