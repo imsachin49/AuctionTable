@@ -5,6 +5,7 @@ const { asyncHandler } = require('../utils/asyncHandler');
 const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
 const { sentOnMail } = require('../utils/sentOnMail');
+require('dotenv').config();
 
 // Function to generate a token
 const generateToken = async (userId, expiresIn) => {
@@ -213,4 +214,66 @@ const getAllUsers = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, users, "All Users"));
 });
 
-module.exports = { registerUser, loginUser, updateUserDetails, forgetPassword, resetPassword,getAllUsers};
+// oAuthUser
+const authUser = asyncHandler(async (req, res) => {
+    const {username,email,provider,providerId,avatar} = req.body;
+    
+    try {
+        const user = await User.findOne({email});
+        // if user existed and trying to login then send token
+        if(!user){
+            const newUser = new User({
+                username,
+                email,
+                provider,
+                providerId,
+                avatar
+            });
+            await newUser.save();
+            const payload = {
+                user: {
+                    id: newUser._id
+                }
+            };
+            jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: '5d'},(err,token) => {
+                if(err) new ApiError(500,"Error while generating token");
+                console.log("token=>",token);
+                res.status(200).json(new ApiResponse(200,{token},"User Logged in Successfully"));
+            });
+        }else{
+            const payload = {
+                user: {
+                    id: user._id
+                }
+            };
+            jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: '5d'},(err,token) => {
+                if(err) new ApiError(500,"Error while generating token");
+                console.log("token=>",token);
+                res.status(200).json(new ApiResponse(200,{token},"User Logged in Successfully"));
+            });
+        }
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
+});
+
+// // Get user by token
+// router.get('/me', async (req, res) => {
+//   const token = req.header('Authorization');
+
+//   if (!token) {
+//     return res.status(401).json({ msg: 'No token, authorization denied' });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     const user = await User.findById(decoded.user.id).select('-providerId');
+//     res.json(user);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send('Server error');
+//   }
+// });
+
+module.exports = { authUser,registerUser, loginUser, updateUserDetails, forgetPassword, resetPassword,getAllUsers};

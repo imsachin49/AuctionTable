@@ -10,9 +10,13 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    password: {
+    provider:{
         type: String,
-        required: [true, 'Password is required']
+        required: true,
+    },
+    providerId: {
+        type: String,
+        required: true,
     },
     avatar: {
         type: String
@@ -25,5 +29,5 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
- 
+
 module.exports = mongoose.model("User", userSchema);

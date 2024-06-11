@@ -6,10 +6,12 @@ import { LuLogIn } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 import { useSession, signIn, signOut } from "next-auth/react"
+import {useRouter } from "next/navigation";
 
 const LoginButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { data: session } = useSession();
+  const router=useRouter();
 
   return (
     <Dialog

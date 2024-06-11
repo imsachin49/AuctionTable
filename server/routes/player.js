@@ -1,13 +1,13 @@
 const express=require('express');
 const router=express.Router();
-const {verifyToken,verifyTokenAndAdmin,verifyTokenAndseller}=require('../middlewares/verify');
+const {verifyToken,verifyTokenAndAdmin,verifyTokenAndSeller}=require('../middlewares/verify');
 const {addNewPlayer,deletePlayer,getAllPlayers,updatePlayer,searchPlayer,getPlayerById}=require('../controllers/player');
 
 // Create a Player..
-router.post('/',verifyTokenAndseller,addNewPlayer);
+router.post('/',verifyTokenAndSeller,addNewPlayer);
 
 // delete a Player..
-router.delete('/:id',verifyTokenAndseller,deletePlayer);
+router.delete('/:id',verifyTokenAndSeller,deletePlayer);
 
 // get all Players..
 router.get('/',getAllPlayers);

@@ -9,3 +9,9 @@ export const fetchProduct = async (id:string) => {
   const product = await response.json();
   return product;
 }
+
+export const fetchBiddingHistory = async (id:string) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/player/${id}/bidding`);
+  const biddingHistory = await response.json();
+  return biddingHistory;
+}

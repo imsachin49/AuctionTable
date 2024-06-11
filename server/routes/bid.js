@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {verifyToken,verifyTokenAndAdmin,verifyTokenAndseller}=require('../middlewares/verify');
+const {verifyToken,verifyTokenAndAdmin,verifyTokenAndSeller}=require('../middlewares/verify');
 const {
     createNewBid,
     updateBid,

@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {registerUser,loginUser,updateUserDetails,forgetPassword,resetPassword,getAllUsers}=require('../controllers/auth');
+const {authUser,registerUser,loginUser,updateUserDetails,forgetPassword,resetPassword,getAllUsers}=require('../controllers/auth');
 const {verifyToken}=require('../middlewares/verify')
 
 // Register user
@@ -8,6 +8,9 @@ router.post('/register',registerUser);
 
 // Login User
 router.post('/login',loginUser);
+
+// oAuthUser
+router.post('/oauth',authUser);
 
 // Update User..
 router.patch('/',verifyToken,updateUserDetails); 

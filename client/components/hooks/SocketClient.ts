@@ -1,17 +1,29 @@
 "use client";
-import { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import { useEffect, useState } from "react";
+import io, { Socket } from "socket.io-client";
+import { useSession } from "next-auth/react";
 
-const useClient = (serverUrl:string) => {
-  const [socket, setSocket] = useState(null);
+const useClient = () => {
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const { data: session } = useSession();
+  const serverUrl= 'http://localhost:3001'
+
+  if (!session) {
+    return null;
+  }
 
   useEffect(() => {
-    const newSocket = io(serverUrl);
-    
-    // @ts-ignore
+    // const newSocket = io(serverUrl);
+    // setSocket(newSocket);
+
+    const newSocket = io(serverUrl, {
+      auth: {
+        token: session?.user?.token,
+      },
+    });
+
     setSocket(newSocket);
 
-    // Clean up the socket connection when the component unmounts
     return () => {
       newSocket.disconnect();
     };

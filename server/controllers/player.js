@@ -236,6 +236,18 @@ const searchPlayer = asyncHandler(async (req, res) => {
     }
 });
 
+const getAllBidsOfPlayer=asyncHandler(async(req,res)=>{
+    if(!req.params.id) throw new ApiError(401,"Player Id not Found");
+    try {
+        const player=await Player.findById(req.params.id);
+        if(!player) throw new ApiError(402,"Player not Found");
+        res.status(200).json(new ApiResponse(201,player.bids,"Bids Found SuccessFull"));
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(500,error.message,"Internal Serevr Error");
+    }
+});
+
 // Filter on the basis of startTime and EndTime.
 // const startEndTimeFilter=asyncHandle(async(req,res)=>{})
 
@@ -245,5 +257,6 @@ module.exports = {
     getAllPlayers,
     updatePlayer,
     searchPlayer,
-    getPlayerById
+    getPlayerById,
+    getAllBidsOfPlayer
 }

@@ -43,8 +43,19 @@ const playerSchema = new mongoose.Schema({
     },
     bids: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Bid'
+            bidderId: {
+                // type: mongoose.Schema.Types.ObjectId,
+                type: String,
+                ref: 'User'
+            },
+            bidAmount: {
+                type: Number,
+                required: true
+            },
+            biddingTime: {
+                type: Number,
+                required: true
+            }
         }
     ]
 },

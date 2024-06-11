@@ -1,14 +1,23 @@
 "use client";
 import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LoginButton from "./LoginModal";
 import { useSession, signIn, signOut } from "next-auth/react";
 import UserAccountNav from "./UserAccountNav";
+import { Button } from "./ui/Button";
+import { LuLogIn } from "react-icons/lu";
+import { useSearchParams } from "next/navigation";
 
 const Navbar = () => {
-  const pathname = usePathname();
   const { data: session } = useSession();
+  const router = useRouter();
+  const pathname=usePathname();
+  console.log("pathname",pathname);
+
+  const handleLoginClick = () => {
+    router.push(`/login?callbackUrl=${pathname}`);
+  };
 
   return (
     <div className="w-full p-3 border sticky top-0 bg-white z-40">
@@ -23,7 +32,7 @@ const Navbar = () => {
             </h6>
           </div>
         </Link>
-        {pathname !== "/" && (
+        {pathname !== "/" && pathname !== "/login" && (
           <div className="flex items-center justify-center w-[600px]">
             <input
               type="text"
@@ -43,7 +52,16 @@ const Navbar = () => {
               imageUrl={session.user.image ?? "/user-info.avif"}
             />
           ) : (
-            <LoginButton />
+            // <LoginButton />
+            <Button
+              variant={"open"}
+              type="button"
+              className="px-4 py-1 flex items-center font-semibold gap-2"
+              onClick={handleLoginClick}
+            >
+              <LuLogIn size={15} />
+              <span>Login</span>
+            </Button>
           )}
         </>
       </div>
