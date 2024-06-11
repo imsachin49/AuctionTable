@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import React from "react";
 import useSWR from "swr";
 import { fetchProducts } from "@/services/productService";
+import Footer from "@/components/Footer";
 
 export default function page() {
   const { data: productsData } = useSWR("/", fetchProducts);
@@ -22,6 +23,7 @@ export default function page() {
           })}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

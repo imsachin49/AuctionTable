@@ -12,12 +12,14 @@ const useClient = () => {
     return null;
   }
 
+
   useEffect(() => {
     // const newSocket = io(serverUrl);
     // setSocket(newSocket);
 
     const newSocket = io(serverUrl, {
       auth: {
+        // @ts-ignore
         token: session?.user?.token,
       },
     });

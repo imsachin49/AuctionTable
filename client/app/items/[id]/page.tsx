@@ -7,16 +7,15 @@ import BiddingTab from "@/components/bid/BiddingTab";
 import PlaceBid from "@/components/bid/PlaceBid";
 import { usePathname } from "next/navigation";
 import useSWR from "swr";
-import { fetchProduct } from "@/services/productService";
+import { fetchProduct,fetchBiddingHistory } from "@/services/productService";
 import { useState, useEffect } from "react";
+import Footer from "@/components/Footer";
 
 export default function page() {
   const pathname = usePathname();
   const productId = pathname.split("/")[2];
-  const { data: productData, error } = useSWR(
-    productId ? `/api/player/${productId}` : null,
-    () => fetchProduct(productId)
-  );
+  const { data: productData, error } = useSWR(productId ? `/api/player/${productId}` : null,() => fetchProduct(productId));
+  const { data: biddingHistory, error: biddingHistoryError } = useSWR(productId ? `/api/player/${productId}/bids` : null,() => fetchBiddingHistory(productId));
   const [timeRemaining, setTimeRemaining] = useState("");
 
   useEffect(() => {
@@ -71,7 +70,6 @@ export default function page() {
       if (remainingSeconds > 0) {
         timeString += ` ${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
       }
-  
       setTimeRemaining(`The auction will start in ${timeString}`);
     };
   
@@ -103,9 +101,10 @@ export default function page() {
             </div>
           </div>
           {/* @ts-ignore */}
-          <BiddingTab product={productData} />
+          <BiddingTab product={productData} biddingHistory={biddingHistory} />
         </div>
       </div>
+      <Footer />
     </>
   );
 }

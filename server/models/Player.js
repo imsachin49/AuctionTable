@@ -44,8 +44,7 @@ const playerSchema = new mongoose.Schema({
     bids: [
         {
             bidderId: {
-                // type: mongoose.Schema.Types.ObjectId,
-                type: String,
+                type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
             },
             bidAmount: {

@@ -3,9 +3,10 @@ import ItemCard from "../ItemCard";
 
 export default function OtherAuction() {
   return (
-    <div className="flex gap-2">
-      {/* <ItemCard /> */}
-      {/* <ItemCard /> */}
+    <div className="">
+      <div className="">
+        Item Coming Soon!!
+      </div>
     </div>
   );
 }

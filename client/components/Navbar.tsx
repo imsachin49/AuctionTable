@@ -2,18 +2,16 @@
 import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
 import { usePathname, useRouter } from "next/navigation";
-import LoginButton from "./LoginModal";
 import { useSession, signIn, signOut } from "next-auth/react";
 import UserAccountNav from "./UserAccountNav";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 import { LuLogIn } from "react-icons/lu";
-import { useSearchParams } from "next/navigation";
+import SearchPlayer from "./SearchPlayer";
 
 const Navbar = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const pathname=usePathname();
-  console.log("pathname",pathname);
+  const pathname = usePathname();
 
   const handleLoginClick = () => {
     router.push(`/login?callbackUrl=${pathname}`);
@@ -32,17 +30,8 @@ const Navbar = () => {
             </h6>
           </div>
         </Link>
-        {pathname !== "/" && pathname !== "/login" && (
-          <div className="flex items-center justify-center w-[600px]">
-            <input
-              type="text"
-              placeholder="Search for a product"
-              className="border p-2 rounded-md rounded-r-none text-sm w-full outline outline-transparent placeholder:text-sm placeholder:text-gray-600"
-            />
-            <button className="border p-[7px] bg-[#a33434] rounded-r-md">
-              <IoSearch className="text-2xl text-white" />
-            </button>
-          </div>
+        {pathname === "/items" && (
+          <SearchPlayer />
         )}
         <>
           {session?.user ? (

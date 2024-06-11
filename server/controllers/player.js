@@ -215,24 +215,16 @@ const getPlayerById=asyncHandler(async(req,res)=>{
 
 // Search by player name/description/seller name/type etc
 const searchPlayer = asyncHandler(async (req, res) => {
-    const searchQuery = {};
-
-    for (const key in req.query) {
-        if (req.query.hasOwnProperty(key) && req.query[key] !== '') {
-            if (key === 'name' || key === 'description' || key === 'startTime' || key === 'endTime' || key === 'startPrice' || key === 'status') {
-                searchQuery[key] = { $regex: req.query[key], $options: 'i' };
-            }
-        }
-    }
+    const name=req.query.name;
 
     try {
-        console.log(searchQuery);
-        // filter on the basis of time..
-        const player=await Player.find(searchQuery);
-        res.status(200).json(new ApiResponse(201, player, "done.."));
-    } catch (error){
+        console.log("name==>", name)
+        const players = await Player.find({name:{$regex:name,$options:'i'}}).populate('sellerId').select('name description startTime endTime startPrice picture sellerId');
+        console.log("players", players);
+        res.status(200).json(new ApiResponse(200, players, "Search completed successfully"));
+    } catch (error) {
         console.log(error);
-        throw new ApiError(500, error.message, "something went wrong");
+        throw new ApiError(500, error.message, "Something went wrong");
     }
 });
 
@@ -241,15 +233,16 @@ const getAllBidsOfPlayer=asyncHandler(async(req,res)=>{
     try {
         const player=await Player.findById(req.params.id);
         if(!player) throw new ApiError(402,"Player not Found");
-        res.status(200).json(new ApiResponse(201,player.bids,"Bids Found SuccessFull"));
+        
+        // along with the Bids we need the Bidder who has placed the bid.
+        const bids=await Player.findById(req.params.id).populate('bids.bidderId').select('bids');
+        if(!bids) throw new ApiError(403,"Bids not Found");
+        res.status(200).json(new ApiResponse(201,bids,"Bids Found SuccessFull"));
     } catch (error) {
         console.log(error);
         throw new ApiError(500,error.message,"Internal Serevr Error");
     }
 });
-
-// Filter on the basis of startTime and EndTime.
-// const startEndTimeFilter=asyncHandle(async(req,res)=>{})
 
 module.exports = {
     addNewPlayer,

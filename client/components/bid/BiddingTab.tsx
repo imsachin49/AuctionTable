@@ -4,7 +4,7 @@ import LongDescription from "./LongDescription";
 import BiddingHistory from "./BiddingHistory";
 import OtherAuction from "./OtherAuction";
 
-export default function BiddingTab() {
+export default function BiddingTab({biddingHistory}) {
   const [tab, setTab] = useState<Number>(1);
 
   return (
@@ -39,7 +39,7 @@ export default function BiddingTab() {
         {tab == 1 ? (
           <LongDescription />
         ) : tab == 2 ? (
-          <BiddingHistory />
+          <BiddingHistory biddingHistory={biddingHistory} />
         ) : (
           <OtherAuction />
         )}

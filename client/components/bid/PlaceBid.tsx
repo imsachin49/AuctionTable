@@ -15,7 +15,6 @@ import {
 import useClient from '../hooks/SocketClient';
 import { useSession } from 'next-auth/react';
 import BidButton from './PlaceBidButton';
-import { useRouter } from 'next/navigation';
 
 interface ProductProps {
   data: {
@@ -28,8 +27,7 @@ interface ProductProps {
 export default function PlaceBid({ product }: { product: ProductProps }) {
   const [bidAmount, setBidAmount] = useState<number>(product?.data?.currentPrice); 
   const { data: session } = useSession(); 
-  const socket = useClient(); 
-  const router=useRouter();
+  // const socket = useClient(); 
 
   const incrementBidAmount = () => {
     setBidAmount((prev) => prev + 20);
@@ -50,61 +48,61 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
   }, [product?.data?.currentPrice, product?.data?._id]); // Hook 5
 
   const placeBid = () => {
-    if (!session) {
-      toast.error('Please login to place a bid.');
-      return;
-    }
-    if (bidAmount <= product?.data?.currentPrice) {
-      toast.error('Bid amount should be greater than the current price.');
-      return;
-    }
-    if (socket) {
-      toast.success('Bid placed successfully!');
-      socket.emit('bid', {
-        currentPrice: bidAmount,
-        productId: product?.data?._id,
-        userId: session?.user?.id,
-      });
-    } else {
-      toast.error('Socket connection failed!');
-    }
+  //   if (!session) {
+  //     toast.error('Please login to place a bid.');
+  //     return;
+  //   }
+  //   if (bidAmount <= product?.data?.currentPrice) {
+  //     toast.error('Bid amount should be greater than the current price.');
+  //     return;
+  //   }
+  //   if (socket) {
+  //     toast.success('Bid placed successfully!');
+  //     socket.emit('bid', {
+  //       currentPrice: bidAmount,
+  //       productId: product?.data?._id,
+  //       userId: session?.user?.id,
+  //     });
+  //   } else {
+  //     toast.error('Socket connection failed!');
+  //   }
   };
 
-  useEffect(() => {
-    if (!socket) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!socket) {
+  //     return;
+  //   }
 
-    const handleConnect = () => {
-      console.log('A user Connected...');
-    };
+  //   const handleConnect = () => {
+  //     console.log('A user Connected...');
+  //   };
 
-    const handleBidPlaced = (data: {
-      productId: string;
-      currentPrice: number;
-    }) => {
-      console.log('Broadcasted message from server', data);
-      if (data.productId === product.data._id) {
-        setBidAmount(data.currentPrice);
-        toast.success(`New bid placed: $${data.currentPrice}`);
-      }
-    };
+  //   const handleBidPlaced = (data: {
+  //     productId: string;
+  //     currentPrice: number;
+  //   }) => {
+  //     console.log('Broadcasted message from server', data);
+  //     if (data.productId === product.data._id) {
+  //       setBidAmount(data.currentPrice);
+  //       toast.success(`New bid placed: $${data.currentPrice}`);
+  //     }
+  //   };
 
-    const handleBidRejected = (data: any) => {
-      console.log('Bid rejected message from server', data);
-      toast.error(data.message);
-    };
+  //   const handleBidRejected = (data: any) => {
+  //     console.log('Bid rejected message from server', data);
+  //     toast.error(data.message);
+  //   };
 
-    socket.on('connect', handleConnect);
-    socket.on('bidPlaced', handleBidPlaced);
-    socket.on('bidRejected', handleBidRejected);
+  //   socket.on('connect', handleConnect);
+  //   socket.on('bidPlaced', handleBidPlaced);
+  //   socket.on('bidRejected', handleBidRejected);
 
-    return () => {
-      socket.off('connect', handleConnect);
-      socket.off('bidPlaced', handleBidPlaced);
-      socket.off('bidRejected', handleBidRejected);
-    };
-  }, [socket, product?.data?._id]);
+  //   return () => {
+  //     socket.off('connect', handleConnect);
+  //     socket.off('bidPlaced', handleBidPlaced);
+  //     socket.off('bidRejected', handleBidRejected);
+  //   };
+  // }, [socket, product?.data?._id]);
 
   return (
     <div className="border border-gray-100 p-4 pt-3 max-w-md rounded-md shadow-md">
