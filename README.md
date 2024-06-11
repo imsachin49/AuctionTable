@@ -1,6 +1,7 @@
 ## AuctionTable  
 ### A real-time socket server implementation is forthcoming.
 
+<<<<<<< HEAD
 ## Things to do
 1. Add Queues for the AuctionEnd and AuctionStart.
 2. Explore Pub/Sub for the same.
@@ -27,4 +28,4 @@
 10. Moment.js
 11. React-Toastify
 12. React-Icons
-<!-- 13. React-Countdown -->
+<!-- 13. React-Country-Flag -->
