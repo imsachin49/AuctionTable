@@ -21,21 +21,57 @@ export default function page() {
   useEffect(() => {
     const calculateTimeRemaining = () => {
       const now = Date.now();
-      const startTime = productData?.data?.startTime;
-      const endTime = productData?.data?.endTime;
-  
+      const startTime = new Date(productData?.data?.startTime).getTime();
+      const endTime = new Date(productData?.data?.endTime).getTime();
+
       if (now > endTime) {
         setTimeRemaining("Auction ended");
         return;
       }
-  
+
       const diff = startTime - now;
-  
+
       if (diff <= 0) {
-        setTimeRemaining("Auction started");
+        const endDiff = endTime - now;
+        const endSeconds = Math.floor(endDiff / 1000);
+        const endMinutes = Math.floor(endSeconds / 60);
+        const endHours = Math.floor(endMinutes / 60);
+        const endDays = Math.floor(endHours / 24);
+        const endWeeks = Math.floor(endDays / 7);
+        const endMonths = Math.floor(endWeeks / 4);
+        const endYears = Math.floor(endMonths / 12);
+        const remainingEndHours = endHours % 24;
+        const remainingEndMinutes = endMinutes % 60;
+        const remainingEndSeconds = endSeconds % 60;
+
+        let endTimeString = '';
+
+        if (endYears > 0) {
+          endTimeString += `${endYears} year${endYears !== 1 ? 's' : ''}`;
+        }
+        if (endMonths > 0) {
+          endTimeString += ` ${endMonths} month${endMonths !== 1 ? 's' : ''}`;
+        }
+        if (endWeeks > 0) {
+          endTimeString += ` ${endWeeks} week${endWeeks !== 1 ? 's' : ''}`;
+        }
+        if (endDays > 0) {
+          endTimeString += ` ${endDays} day${endDays !== 1 ? 's' : ''}`;
+        }
+        if (remainingEndHours > 0) {
+          endTimeString += ` ${remainingEndHours} hour${remainingEndHours !== 1 ? 's' : ''}`;
+        }
+        if (remainingEndMinutes > 0) {
+          endTimeString += ` ${remainingEndMinutes} minute${remainingEndMinutes !== 1 ? 's' : ''}`;
+        }
+        if (remainingEndSeconds > 0) {
+          endTimeString += ` ${remainingEndSeconds} second${remainingEndSeconds !== 1 ? 's' : ''}`;
+        }
+
+        setTimeRemaining(`Auction ends in ${endTimeString}`);
         return;
       }
-  
+
       const seconds = Math.floor(diff / 1000);
       const minutes = Math.floor(seconds / 60);
       const hours = Math.floor(minutes / 60);
@@ -46,9 +82,9 @@ export default function page() {
       const remainingHours = hours % 24;
       const remainingMinutes = minutes % 60;
       const remainingSeconds = seconds % 60;
-  
+
       let timeString = '';
-  
+
       if (years > 0) {
         timeString += `${years} year${years !== 1 ? 's' : ''}`;
       }
@@ -70,14 +106,14 @@ export default function page() {
       if (remainingSeconds > 0) {
         timeString += ` ${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
       }
+
       setTimeRemaining(`The auction will start in ${timeString}`);
     };
-  
+
     calculateTimeRemaining();
     const timerId = setInterval(calculateTimeRemaining, 1000);
     return () => clearInterval(timerId);
-  }, [productData, productData?.data, productData?.data?.startTime, productData?.data?.endTime]);
-  
+  }, [productData]);
 
   return (
     <>
@@ -89,7 +125,7 @@ export default function page() {
         <div className="w-full">
           <div className="w-full p-4 flex justify-center">
             <div className="w-full flex justify-center">
-              <BiddingProductImage />
+              <BiddingProductImage product={productData} />
             </div>
             <div className="w-full">
               {/* @ts-ignore */}

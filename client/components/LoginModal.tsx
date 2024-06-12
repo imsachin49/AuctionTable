@@ -1,17 +1,20 @@
 "use client";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/Dialog";
-import { Button } from "./ui/Button";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Button } from "./ui/button";
 import { LuLogIn } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 import { useSession, signIn, signOut } from "next-auth/react"
 import {useRouter } from "next/navigation";
 
-const LoginButton = () => {
+interface LoginButtonProps {
+  title: string;
+  variant: "open" | "hot" | "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+}
+
+const LoginButton = ({title,variant}:LoginButtonProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { data: session } = useSession();
-  const router=useRouter();
 
   return (
     <Dialog
@@ -28,12 +31,12 @@ const LoginButton = () => {
         className="lex items-center justify-center"
       >
         <Button
-          variant="open"
+          variant={variant}
           type="button"
           className="px-4 py-1 flex items-center font-semibold gap-2"
         >
           <LuLogIn size={15} />
-          <span>Login</span>
+          <span>{title}</span>
         </Button>
       </DialogTrigger>
 

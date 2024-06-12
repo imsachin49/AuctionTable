@@ -8,8 +8,7 @@ import { searchPlayers } from "@/services/productService";
 export default function () {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500); 
-  const { data: players } = useSWR(debouncedSearchTerm ? `/api/player/all?name=${debouncedSearchTerm}` : null, searchPlayers);
-  console.log("players", players);
+  const { data: players } = useSWR(debouncedSearchTerm ? `/api/player/search/all?name=${debouncedSearchTerm}` : null, searchPlayers);
 
   return (
     <div className="flex items-center justify-center w-[600px]">

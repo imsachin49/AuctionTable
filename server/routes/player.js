@@ -1,7 +1,7 @@
 const express=require('express');
 const router=express.Router();
 const {verifyToken,verifyTokenAndAdmin,verifyTokenAndSeller}=require('../middlewares/verify');
-const {addNewPlayer,deletePlayer,getAllPlayers,updatePlayer,searchPlayer,getPlayerById,getAllBidsOfPlayer}=require('../controllers/player');
+const {addNewPlayer,deletePlayer,getAllPlayers,updatePlayer,searchPlayer,getPlayerById,getAllBidsOfPlayer,getTopXOngoingPlayers}=require('../controllers/player');
 
 // Create a Player..
 router.post('/',verifyTokenAndSeller,addNewPlayer);
@@ -23,5 +23,8 @@ router.get('/search/all',searchPlayer);
 
 // get all bids of a player
 router.get('/:id/bids',getAllBidsOfPlayer);
+
+// get top x ongoing players
+router.get('/top/ongoing',getTopXOngoingPlayers);
 
 module.exports=router;

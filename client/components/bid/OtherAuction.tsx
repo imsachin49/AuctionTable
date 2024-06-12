@@ -5,7 +5,7 @@ export default function OtherAuction() {
   return (
     <div className="">
       <div className="">
-        Item Coming Soon!!
+        Other Live Auctions will be shown here!!
       </div>
     </div>
   );

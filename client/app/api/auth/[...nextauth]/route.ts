@@ -72,7 +72,7 @@ const handler = NextAuth({
         return false;
       }
     },
-    async jwt({token,user}:{token: any,user: CustomUser}) {
+    async jwt({ token, user }: { token: any; user: CustomUser }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -80,7 +80,11 @@ const handler = NextAuth({
       }
       return token;
     },
-    async session({session,user,token,}: {
+    async session({
+      session,
+      user,
+      token,
+    }: {
       session: CustomSession;
       user: CustomUser;
       token: any;
@@ -92,9 +96,6 @@ const handler = NextAuth({
       session.user.token = token.token;
       return session;
     },
-    async redirect({ url, baseUrl }) {
-      return "/items";
-    }
   },
   pages: {
     signIn: "/auth/signin",

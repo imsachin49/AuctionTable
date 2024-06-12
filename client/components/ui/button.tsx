@@ -18,6 +18,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
         link: "text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50",
         open: "text-gray-800 border border-gray-300 rounded-lg text-sm hover:bg-[#f1f5f9]",
+        hot: "text-gray-800 border border-rose-200 rounded-lg text-sm bg-rose-400 hover:bg-rose-500 text-[#f1f5f9]",
       },
       size: {
         default: "h-10 px-4 py-2",

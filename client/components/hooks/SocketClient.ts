@@ -8,14 +8,13 @@ const useClient = () => {
   const { data: session } = useSession();
   const serverUrl= 'http://localhost:3001'
 
-  if (!session) {
-    return null;
-  }
-
-
   useEffect(() => {
     // const newSocket = io(serverUrl);
     // setSocket(newSocket);
+
+    if (!session) {
+      return;
+    }  
 
     const newSocket = io(serverUrl, {
       auth: {
@@ -29,7 +28,7 @@ const useClient = () => {
     return () => {
       newSocket.disconnect();
     };
-  }, [serverUrl]);
+  }, [session]);
 
   return socket;
 };

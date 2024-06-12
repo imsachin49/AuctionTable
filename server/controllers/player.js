@@ -128,7 +128,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
         if (picture) updateFields.picture = picture;
         // check if the start time is in the future
         if (startTime) {
-            if (startTime < now) {
+            if (startTime <= now) {
                 throw new ApiError(401, "Start time must be in the future");
             } else {
                 updateFields.startTime = startTime;
@@ -136,7 +136,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
         }
         // check if the end time is in the future
         if (endTime) {
-            if (endTime < now) {
+            if (endTime <= now) {
                 throw new ApiError(401, "End time must be in the future");
             } else {
                 updateFields.endTime = endTime;
@@ -157,7 +157,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
             throw new ApiError(401, "Player id is required");
         }
 
-        // Check if the user is logged in
+        // Check if the user is logged in===>done by the middleware too..
         if (!userId) {
             throw new ApiError(402, "User id is required");
         }
@@ -213,13 +213,12 @@ const getPlayerById=asyncHandler(async(req,res)=>{
     }
 });
 
-// Search by player name/description/seller name/type etc
 const searchPlayer = asyncHandler(async (req, res) => {
     const name=req.query.name;
 
     try {
         console.log("name==>", name)
-        const players = await Player.find({name:{$regex:name,$options:'i'}}).populate('sellerId').select('name description startTime endTime startPrice picture sellerId');
+        const players = await Player.find({name:{$regex:name,$options:'i'}}).populate('bids.bidderId');
         console.log("players", players);
         res.status(200).json(new ApiResponse(200, players, "Search completed successfully"));
     } catch (error) {
@@ -244,6 +243,17 @@ const getAllBidsOfPlayer=asyncHandler(async(req,res)=>{
     }
 });
 
+const getTopXOngoingPlayers=asyncHandler(async(req,res)=>{
+    const x=req.query.x;
+    try {
+        const players=await Player.find({endTime:{$gt:new Date().getTime()}}).sort({currentPrice:-1}).limit(x);
+        res.status(200).json(new ApiResponse(201,players,"Top Ongoing Players Found SuccessFull"));
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(500,error.message,"Internal Serevr Error");
+    }
+});
+
 module.exports = {
     addNewPlayer,
     deletePlayer,
@@ -251,5 +261,6 @@ module.exports = {
     updatePlayer,
     searchPlayer,
     getPlayerById,
-    getAllBidsOfPlayer
+    getAllBidsOfPlayer,
+    getTopXOngoingPlayers
 }

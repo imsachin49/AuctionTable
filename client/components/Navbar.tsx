@@ -7,6 +7,7 @@ import UserAccountNav from "./UserAccountNav";
 import { Button } from "./ui/button";
 import { LuLogIn } from "react-icons/lu";
 import SearchPlayer from "./SearchPlayer";
+import LoginButton from "./LoginModal";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -30,9 +31,7 @@ const Navbar = () => {
             </h6>
           </div>
         </Link>
-        {pathname === "/items" && (
-          <SearchPlayer />
-        )}
+        {pathname === "/items" && <SearchPlayer />}
         <>
           {session?.user ? (
             <UserAccountNav
@@ -41,16 +40,7 @@ const Navbar = () => {
               imageUrl={session.user.image ?? "/user-info.avif"}
             />
           ) : (
-            // <LoginButton />
-            <Button
-              variant={"open"}
-              type="button"
-              className="px-4 py-1 flex items-center font-semibold gap-2"
-              onClick={handleLoginClick}
-            >
-              <LuLogIn size={15} />
-              <span>Login</span>
-            </Button>
+            <LoginButton title="Login" variant="open" />
           )}
         </>
       </div>

@@ -1,11 +1,11 @@
 "use client";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import LoginButton from "../LoginModal";
 
 const BidButton = ({ onClick }: { onClick: () => void }) => {
-  const router = useRouter();
   const { data: session } = useSession();
+
   return (
     <>
       {session ? (
@@ -15,12 +15,7 @@ const BidButton = ({ onClick }: { onClick: () => void }) => {
           Place a bid
         </AlertDialogTrigger>
       ) : (
-        <button
-          className="border flex items-center justify-center w-full rounded-[4px] px-3 py-1 text-xs bg-rose-500 hover:bg-rose-600 text-gray-100 capitalize font-semibold"
-          onClick={() => router.push("/login")}
-        >
-          Login to bid
-        </button>
+        <LoginButton title="Login to bid" variant="hot" />
       )}
     </>
   );
