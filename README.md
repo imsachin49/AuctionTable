@@ -13,10 +13,10 @@
 10. Will time automatically update on expiry of the auction.
 
 ## How to run the project
-   Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`
+   Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`   
    Change the directory to the project folder=> `cd AuctionTable`
 
-    ### For Backend
+### For Backend
     1. Change the directory to the backend folder=> `cd server`
     2. Install the dependencies=> `npm install`
     3. Add the environment variables in a .env file.
