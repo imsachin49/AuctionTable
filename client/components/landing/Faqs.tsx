@@ -4,9 +4,9 @@ import { accordionItems } from "../data/landing";
 export default function Faqs() {
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center my-14">
         <div className="w-full max-w-2xl p-4">
-          <h1 className="text-4xl font-bold mb-2 text-center py-5 text-blue-950">
+          <h1 className="text-xl sm:text-4xl font-bold sm:mb-2 mb-1 text-center py-5 text-blue-950">
             Frequently Asked Questions
           </h1>
           <p className="text-sm mb-8 text-center text-blue-950">

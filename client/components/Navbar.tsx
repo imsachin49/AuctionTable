@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <div className="w-full p-3 border sticky top-0 bg-white z-40">
-      <div className="flex justify-between px-1">
+      <div className="flex justify-between px-1 items-center">
         <Link href={"/"} className="flex items-center gap-1">
           <img src={"/auction-logo.avif"} alt="logo" className="w-12 h-12" />
           <div className="flex items-center flex-col">

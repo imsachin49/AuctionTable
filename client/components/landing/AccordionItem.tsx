@@ -6,7 +6,7 @@ import { LuMinus } from "react-icons/lu";
 
 export const AccordionItem = ({ title, content }: AccordionItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [height, setHeight] = useState('0px');
+  const [height, setHeight] = useState("0px");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const toggleAccordion = () => {
@@ -15,7 +15,7 @@ export const AccordionItem = ({ title, content }: AccordionItemProps) => {
 
   useEffect(() => {
     if (contentRef.current) {
-      setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : '0px');
+      setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
     }
   }, [isOpen]);
 
@@ -26,16 +26,18 @@ export const AccordionItem = ({ title, content }: AccordionItemProps) => {
         onClick={toggleAccordion}
       >
         <div className="flex justify-between items-center">
-          <span className="text-md text-blue-950 font-sans">{title}</span>
+          <span className="text-sm sm:text-md text-blue-950 font-sans">
+            {title}
+          </span>
           <span>{isOpen ? <LuMinus /> : <LuPlus />}</span>
         </div>
       </button>
-      <div 
-        ref={contentRef} 
-        style={{ maxHeight: height }} 
+      <div
+        ref={contentRef}
+        style={{ maxHeight: height }}
         className="overflow-hidden transition-max-height duration-500 ease-in-out"
       >
-        <div className="text-sm px-4 pb-4 text-blue-900">
+        <div className="text-xs sm:text-sm px-2 sm:px-4 pb-4 text-blue-900 font-sans">
           {content}
         </div>
       </div>

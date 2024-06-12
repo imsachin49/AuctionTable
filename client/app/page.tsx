@@ -13,7 +13,7 @@ export default function Home() {
       <Process />
       <AppImage />
       <Faqs />
-      <Footer />
+      <Footer /> 
     </>
   );
 }
