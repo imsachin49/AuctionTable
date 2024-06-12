@@ -29,13 +29,15 @@
 4. Run the frontend=> `npm run dev`
 
 ### .env file for backend
-```PORT=''
+```
+PORT=''
 MONGO_URI=''
 JWT_SECRET=''
 ```
 
 ### .env.local file for frontend
-```NEXT_PUBLIC_BACKEND_URL=''
+```
+NEXT_PUBLIC_BACKEND_URL=''
 GITHUB_ID=''
 GITHUB_SECRET=''
 GOOGLE_CLIENT_ID=''
