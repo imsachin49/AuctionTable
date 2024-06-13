@@ -7,15 +7,22 @@ import BiddingTab from "@/components/bid/BiddingTab";
 import PlaceBid from "@/components/bid/PlaceBid";
 import { usePathname } from "next/navigation";
 import useSWR from "swr";
-import { fetchProduct,fetchBiddingHistory } from "@/services/productService";
+import { fetchProduct, fetchBiddingHistory } from "@/services/productService";
 import { useState, useEffect } from "react";
 import Footer from "@/components/Footer";
+import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
 
-export default function page() {
+export default function Page() {
   const pathname = usePathname();
   const productId = pathname.split("/")[2];
-  const { data: productData, error } = useSWR(productId ? `/api/player/${productId}` : null,() => fetchProduct(productId));
-  const { data: biddingHistory, error: biddingHistoryError } = useSWR(productId ? `/api/player/${productId}/bids` : null,() => fetchBiddingHistory(productId));
+  const { data: productData, error } = useSWR(
+    productId ? `/api/player/${productId}` : null,
+    () => fetchProduct(productId)
+  );
+  const { data: biddingHistory, error: biddingHistoryError } = useSWR(
+    productId ? `/api/player/${productId}/bids` : null,
+    () => fetchBiddingHistory(productId)
+  );
   const [timeRemaining, setTimeRemaining] = useState("");
 
   useEffect(() => {
@@ -44,28 +51,34 @@ export default function page() {
         const remainingEndMinutes = endMinutes % 60;
         const remainingEndSeconds = endSeconds % 60;
 
-        let endTimeString = '';
+        let endTimeString = "";
 
         if (endYears > 0) {
-          endTimeString += `${endYears} year${endYears !== 1 ? 's' : ''}`;
+          endTimeString += `${endYears} year${endYears !== 1 ? "s" : ""}`;
         }
         if (endMonths > 0) {
-          endTimeString += ` ${endMonths} month${endMonths !== 1 ? 's' : ''}`;
+          endTimeString += ` ${endMonths} month${endMonths !== 1 ? "s" : ""}`;
         }
         if (endWeeks > 0) {
-          endTimeString += ` ${endWeeks} week${endWeeks !== 1 ? 's' : ''}`;
+          endTimeString += ` ${endWeeks} week${endWeeks !== 1 ? "s" : ""}`;
         }
         if (endDays > 0) {
-          endTimeString += ` ${endDays} day${endDays !== 1 ? 's' : ''}`;
+          endTimeString += ` ${endDays} day${endDays !== 1 ? "s" : ""}`;
         }
         if (remainingEndHours > 0) {
-          endTimeString += ` ${remainingEndHours} hour${remainingEndHours !== 1 ? 's' : ''}`;
+          endTimeString += ` ${remainingEndHours} hour${
+            remainingEndHours !== 1 ? "s" : ""
+          }`;
         }
         if (remainingEndMinutes > 0) {
-          endTimeString += ` ${remainingEndMinutes} minute${remainingEndMinutes !== 1 ? 's' : ''}`;
+          endTimeString += ` ${remainingEndMinutes} minute${
+            remainingEndMinutes !== 1 ? "s" : ""
+          }`;
         }
         if (remainingEndSeconds > 0) {
-          endTimeString += ` ${remainingEndSeconds} second${remainingEndSeconds !== 1 ? 's' : ''}`;
+          endTimeString += ` ${remainingEndSeconds} second${
+            remainingEndSeconds !== 1 ? "s" : ""
+          }`;
         }
 
         setTimeRemaining(`Auction ends in ${endTimeString}`);
@@ -83,28 +96,34 @@ export default function page() {
       const remainingMinutes = minutes % 60;
       const remainingSeconds = seconds % 60;
 
-      let timeString = '';
+      let timeString = "";
 
       if (years > 0) {
-        timeString += `${years} year${years !== 1 ? 's' : ''}`;
+        timeString += `${years} year${years !== 1 ? "s" : ""}`;
       }
       if (months > 0) {
-        timeString += ` ${months} month${months !== 1 ? 's' : ''}`;
+        timeString += ` ${months} month${months !== 1 ? "s" : ""}`;
       }
       if (weeks > 0) {
-        timeString += ` ${weeks} week${weeks !== 1 ? 's' : ''}`;
+        timeString += ` ${weeks} week${weeks !== 1 ? "s" : ""}`;
       }
       if (days > 0) {
-        timeString += ` ${days} day${days !== 1 ? 's' : ''}`;
+        timeString += ` ${days} day${days !== 1 ? "s" : ""}`;
       }
       if (remainingHours > 0) {
-        timeString += ` ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}`;
+        timeString += ` ${remainingHours} hour${
+          remainingHours !== 1 ? "s" : ""
+        }`;
       }
       if (remainingMinutes > 0) {
-        timeString += ` ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+        timeString += ` ${remainingMinutes} minute${
+          remainingMinutes !== 1 ? "s" : ""
+        }`;
       }
       if (remainingSeconds > 0) {
-        timeString += ` ${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+        timeString += ` ${remainingSeconds} second${
+          remainingSeconds !== 1 ? "s" : ""
+        }`;
       }
 
       setTimeRemaining(`The auction will start in ${timeString}`);
@@ -119,25 +138,31 @@ export default function page() {
     <>
       <Navbar />
       <div className="flex">
-        <div className="">
+        <div className="hidden lg:block">
           <Sidebar />
         </div>
-        <div className="w-full">
-          <div className="w-full p-4 flex justify-center">
-            <div className="w-full flex justify-center">
-              <BiddingProductImage product={productData} />
+
+        <div className="flex flex-col w-full">
+          <div className="w-full flex h-full px-1 lg:px-8 items-center flex-col md:flex-row mb-5">
+            <div className="p-2 flex flex-col gap-1 w-full h-full max-w-[550px] md:max-w-full items-center justify-center">
+              <ProductDetailsCarousel />
             </div>
-            <div className="w-full">
-              {/* @ts-ignore */}
-              <BiddingDescription
-                product={productData}
-                timeRemaining={timeRemaining}
-              />
-              <PlaceBid product={productData} />
+            <div className="p-2 flex flex-col gap-2 w-full h-full max-w-[550px] md:max-w-full">
+              <div className="w-full">
+                <BiddingDescription
+                  product={productData}
+                  timeRemaining={timeRemaining}
+                />
+              </div>
+              <div className="">
+                <PlaceBid product={productData} />
+              </div>
             </div>
           </div>
-          {/* @ts-ignore */}
-          <BiddingTab product={productData} biddingHistory={biddingHistory} />
+
+          <div className="w-full">
+            <BiddingTab biddingHistory={biddingHistory} />
+          </div>
         </div>
       </div>
       <Footer />

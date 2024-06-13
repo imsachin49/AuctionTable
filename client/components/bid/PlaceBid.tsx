@@ -110,7 +110,7 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
   }, [socket, product?.data?._id]);
 
   return (
-    <div className="border border-gray-100 p-4 pt-3 max-w-md rounded-md shadow-md">
+    <div className="border border-gray-100 p-4 pt-3 w-full rounded-md shadow-md">
       <div className="font-bold text-xl pb-[2px] text-gray-950">
         Base Price: ${product?.data?.startPrice}.00
       </div>
@@ -121,13 +121,13 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
         <div className="text-xs text-gray-500 font-medium w-[40px] bg-[#32c36c] p-[1px] absolute -top-2 rounded-full"></div>
         <div className="text-xs text-gray-500 font-medium w-[5px] bg-[#32c36c] p-[1px] absolute -top-2 left-10 rounded-full"></div>
       </div>
-      <div className="flex gap-2">
-        <form className="flex border items-center w-fit">
-          <button type="button" className="p-3 py-2" onClick={decrementBidAmount}>
+      <div className="flex gap-2  flex-wrap">
+        <form className="flex border items-center flex-1 justify-between">
+          <button type="button" className="px-2 py-2" onClick={decrementBidAmount}>
             <FiMinus className="w-3 h-4 text-gray-90" />
           </button>
-          <input type="text" value={`$${bidAmount}.00`} className="text-center text-gray-700 outline-none border-none text-xs font-sans mx-2"/>
-          <button type="button" className="p-3 py-2" onClick={incrementBidAmount}>
+          <input type="text" value={`$${bidAmount}.00`} className="text-center text-gray-700 outline-none text-xs font-sans"/>
+          <button type="button" className="px-2 py-2" onClick={incrementBidAmount}>
             <FiPlus className="w-3 h-4 text-gray-900" />
           </button>
         </form>

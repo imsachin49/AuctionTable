@@ -19,7 +19,6 @@ export default function BiddingHistory({
     };
   };
 }) {
-
   if (!biddingHistory) {
     return (
       <div className="flex items-center justify-center h-[230px]">
@@ -37,11 +36,11 @@ export default function BiddingHistory({
             .map((item, index) => (
               <tr
                 key={index}
-                className="flex w-full justify-between items-center border border-white border-b-gray-200"
+                className="flex w-full justify-between items-center border border-white border-b-gray-100"
               >
                 <td
                   scope="row"
-                  className="p-2 font-medium text-gray-900 flex gap-4 items-center justify-center"
+                  className="p-1 sm:p-2 font-medium text-gray-900 flex gap-1 sm:gap-4 items-center justify-center"
                 >
                   <div>
                     <Image
@@ -53,7 +52,7 @@ export default function BiddingHistory({
                     />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-gray-600 font-bold text-sm font-sans">
+                    <span className="text-gray-600 font-semibold sm:font-bold text-xs sm:text-sm font-sans">
                       {item?.bidderId?.username || "No Name"}
                     </span>
                     <span className="text-xs text-gray-800">

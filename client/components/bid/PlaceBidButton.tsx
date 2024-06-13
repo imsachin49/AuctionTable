@@ -10,12 +10,12 @@ const BidButton = ({ onClick }: { onClick: () => void }) => {
     <>
       {session ? (
         <AlertDialogTrigger
-          className={`border flex items-center justify-center w-full rounded-[4px] px-3 py-1 text-xs bg-[#32c36c] hover:bg-green-600 text-gray-100 capitalize font-semibold`}
+          className={`flex-1 border flex items-center justify-center w-full rounded-[4px] px-3 py-1 text-xs bg-[#32c36c] hover:bg-green-600 text-gray-100 capitalize font-semibold text-nowrap`}
         >
           Place a bid
         </AlertDialogTrigger>
       ) : (
-        <LoginButton title="Login to bid" variant="hot" />
+        <LoginButton title="Login" variant="hot" />
       )}
     </>
   );
