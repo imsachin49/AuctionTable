@@ -15,7 +15,7 @@ const sidebarItems = [
   { name: "Profile", icon: FaRegUser },
   { name: "Bid History", icon: LuHistory },
   { name: "Contact us", icon: GrContact },
-  { name: "Settings", icon: CiSettings },
+  { name: "Settings", icon: CiSettings }
 ];
 
 export default sidebarItems;

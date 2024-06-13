@@ -6,12 +6,11 @@
 3. Utilise redis for making the Auction more Real-time and Scalable.
 4. Check the timing issue in the AuctionEnd.
 5. Adding live auctions at the landing page.
-6. Implement Search Suggestionsm functionality.
-7. Make Responsive.
-8. Add more features like sorting, filtering, etc.
-9. Change img src to next/image.
-10. Will time automatically update on expiry of the auction.
-11. React Infinite Scroll.
+6. Make Responsive.
+7. Add more features like sorting, filtering, etc.
+8. Change img src to next/image.
+9. Will time automatically update on expiry of the auction.
+10. React Infinite Scroll.
 
 ## How to run the project
    Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`   
