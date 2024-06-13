@@ -16,7 +16,6 @@ interface IProduct {
 
 export default function ItemCard({ product }: { product: IProduct }) {
   const [timeRemaining, setTimeRemaining] = useState("");
-  console.log(product);
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
@@ -92,12 +91,12 @@ export default function ItemCard({ product }: { product: IProduct }) {
   }, [product]);
 
   return (
-    <div className="border border-gray-200 w-[295px] rounded-md max-w-md">
+    <div className="border border-gray-200 rounded-md w-[90%] sm:w-[295px]">
       <div className="relative">
         <img
           src={`${product?.picture ? product?.picture : "/Iphone.png"}`}
           alt="noImg"
-          className="h-[200px] w-[295px] rounded-sm"
+          className="rounded-t-md w-full h-[220px]  sm:h-[200px] sm:w-[295px]"
         />
         <div className="absolute bottom-[12px] flex w-full items-center justify-center">
           <span className="bg-white p-1 shadow-sm rounded-2xl w-4/6 font-gray-950 font-semibold font-sans text-zinc-700 flex items-center justify-center">
@@ -106,7 +105,7 @@ export default function ItemCard({ product }: { product: IProduct }) {
         </div>
       </div>
 
-      <div className="p-2 space-y-[5px] relative w-fill">
+      <div className="p-2 space-y-[5px] relative w-full">
         <p className="text-sm font-sans font-bold text-gray-700 flex p-1 pb-0 text-start px-2 cursor-pointer capitalize">
           {product?.name}
         </p>

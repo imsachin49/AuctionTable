@@ -32,6 +32,10 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage: {
+        'banner1': "url('/auction11.avif')",
+        'banner2': "url('/auction22.avif')",
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

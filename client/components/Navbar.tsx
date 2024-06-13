@@ -1,21 +1,18 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
-import { IoSearch } from "react-icons/io5";
-import { usePathname, useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import UserAccountNav from "./UserAccountNav";
-import { Button } from "./ui/button";
-import { LuLogIn } from "react-icons/lu";
-import SearchPlayer from "./SearchPlayer";
+import { SlMenu } from "react-icons/sl";
 import LoginButton from "./LoginModal";
+import NavDrawer from "./NavDrawer";
 
 const Navbar = () => {
   const { data: session } = useSession();
-  const router = useRouter();
-  const pathname = usePathname();
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  const handleLoginClick = () => {
-    router.push(`/login?callbackUrl=${pathname}`);
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
   };
 
   return (
@@ -31,18 +28,24 @@ const Navbar = () => {
             </h6>
           </div>
         </Link>
-        {pathname === "/items" && <SearchPlayer />}
-        <>
+        <div className="hidden md:block">
           {session?.user ? (
             <UserAccountNav
-              name={session.user.name ?? ""}
-              email={session.user.email ?? ""}
-              imageUrl={session.user.image ?? "/user-info.avif"}
+              name={session?.user?.name ?? ""}
+              email={session?.user?.email ?? ""}
+              imageUrl={session?.user?.image ?? "/user-info.avif"}
             />
           ) : (
             <LoginButton title="Login" variant="open" />
           )}
-        </>
+        </div>
+
+        <div className="block md:hidden">
+          <button className="" type="button" onClick={toggleDrawer}>
+            <SlMenu className="text-3xl text-[#a33434]" />
+          </button>
+          <NavDrawer isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
+        </div>
       </div>
     </div>
   );

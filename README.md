@@ -11,6 +11,7 @@
 8. Add more features like sorting, filtering, etc.
 9. Change img src to next/image.
 10. Will time automatically update on expiry of the auction.
+11. React Infinite Scroll.
 
 ## How to run the project
    Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`   
