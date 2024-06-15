@@ -15,16 +15,26 @@ import ProductDetailsCarousel from "@/components/bid/ProductDetailsCarousel";
 export default function Page() {
   const pathname = usePathname();
   const productId = pathname.split("/")[2];
-  const { data: productData, error } = useSWR(
+  const { data: productData, error} = useSWR(
     productId ? `/api/player/${productId}` : null,
-    () => fetchProduct(productId)
+    () => fetchProduct(productId),
+    {
+      refreshInterval: 15000, // Refresh every 15 seconds (10000 milliseconds) for making sure the time remaining is accurate
+    }
   );
-  const { data: biddingHistory, error: biddingHistoryError } = useSWR(
+
+  const {
+    data: biddingHistory,
+    error: biddingHistoryError,
+    mutate,
+  } = useSWR(
     productId ? `/api/player/${productId}/bids` : null,
-    () => fetchBiddingHistory(productId)
+    () => fetchBiddingHistory(productId),
+    {
+      refreshInterval: 10000, // Refresh every 10 seconds (10000 milliseconds)
+    }
   );
-  // const productData = {};
-  // const biddingHistory = {};
+
   const [timeRemaining, setTimeRemaining] = useState("");
 
   useEffect(() => {
