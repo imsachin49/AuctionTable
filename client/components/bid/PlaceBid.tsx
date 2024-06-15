@@ -1,17 +1,21 @@
 "use client";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { BidConfirmationDialog } from "./BidConfirmationDialog";
 import { useSession } from "next-auth/react";
 import { useSocket } from "../providers/socket-provider";
 import { LuLoader2 } from "react-icons/lu";
 import { BidAmountInput } from "./PlaceBidForm";
+import { BidConfirmationDialog } from "./BidConfirmationDialog";
+import BidButton from "./PlaceBidButton";
 
 interface ProductProps {
   data: {
     currentPrice: number;
     startPrice: number;
     _id: string;
+    startTime: number;
+    endTime: number;
+    isLoggedIn: boolean;
   };
 }
 
@@ -26,23 +30,17 @@ const PlaceBid = ({ product }: { product: ProductProps }) => {
 
   const placeBid = () => {
     try {
-      if (!session) {
-        toast.error("Please login to place a bid.");
-        return;
-      }
+      if (!session) return;
       if (bidAmount <= product?.data?.currentPrice) {
-        toast.error("Bid amount should be greater than the current price.");
+        toast.error(
+          "Bid amount should be greater than the current price=" +
+            product?.data?.currentPrice +
+            ",bidAmount=" +
+            bidAmount
+        );
         return;
       }
       if (socket) {
-        toast("Placing Your Bid!", {
-          icon: <LuLoader2 className="animate-spin" />,
-          style: {
-            padding: "8px",
-            color: "#f9fafb",
-            background: "#333",
-          },
-        });
         socket.emit("bid", {
           currentPrice: bidAmount,
           productId: product?.data?._id,
@@ -68,15 +66,16 @@ const PlaceBid = ({ product }: { product: ProductProps }) => {
 
     const handleBidPlaced = (data: any) => {
       console.log("Broadcasted message from server", data);
-      if (data.productId === product.data._id) {
-        setBidAmount(data.currentPrice);
-        toast.success(`New bid placed: $${data.currentPrice}`);
+      if (data.data.productId === product.data._id) {
+        setBidAmount(data.data.currentPrice);
+        toast.success(data?.message);
       }
     };
 
     const handleBidRejected = (data: any) => {
-      console.log("Bid rejected message from server", data);
-      toast.error(data.message);
+      setBidAmount(product?.data?.currentPrice);
+      console.log("Bid rejected message from server");
+      toast.error(data?.message);
     };
 
     socket.on("connect", handleConnect);
@@ -107,8 +106,15 @@ const PlaceBid = ({ product }: { product: ProductProps }) => {
           bidAmount={bidAmount}
           setBidAmount={setBidAmount}
           currentPrice={product?.data?.currentPrice}
+          startTime={product?.data?.startTime}
+          endTime={product?.data?.endTime}
+          isLoggedIn={session ? true : false}
         />
-        <BidConfirmationDialog bidAmount={bidAmount} placeBid={placeBid} />
+        <BidButton
+          bidAmount={bidAmount}
+          placeBid={placeBid}
+          product={product}
+        />
       </div>
       <Toaster position="top-center" reverseOrder={false} />
     </div>

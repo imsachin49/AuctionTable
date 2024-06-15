@@ -97,6 +97,7 @@ io.on('connection', (socket) => {
 
             const userId = new ObjectId(socket.user._id); // Ensure userId is an ObjectId
             const user = await User.findById(userId).session(session);
+            console.log("user", user);
             if (!user) {
                 console.log('User not found.');
                 socket.emit('bidRejected', { message: 'User not found.' });
@@ -127,7 +128,7 @@ io.on('connection', (socket) => {
             session.endSession();
 
             io.emit('bidPlaced', {
-                message: `Bid placed by user`,
+                message: `A Bid of ${data.currentPrice} has been placed by ${socket.user.username}`,
                 data: {
                     productId: player._id,
                     currentPrice: player.currentPrice,

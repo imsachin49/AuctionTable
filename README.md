@@ -4,10 +4,8 @@
 1. Add Queues for the AuctionEnd and AuctionStart.
 2. Explore Pub/Sub for the same.
 3. Utilise redis for making the Auction more Real-time and Scalable.
-4. Check the timing issue in the AuctionEnd.
-5. Adding live auctions at the landing page.
-6. Change img src to next/image.
-7. Will time automatically update on expiry of the auction.
+4. Adding live auctions at the landing page.
+5. Change img src to next/image.
 
 ## How to run the project
    Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`   

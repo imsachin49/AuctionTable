@@ -1,24 +1,40 @@
 "use client";
-import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { useSession } from "next-auth/react";
 import LoginButton from "../LoginModal";
+import BidActionButton from "./BidActionButton";
+import { GrClosedCaption } from "react-icons/gr";
+import { FaHourglassStart } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import { BidConfirmationDialog } from "./BidConfirmationDialog";
 
-const BidButton = ({ onClick }: { onClick: () => void }) => {
+interface BidButtonProps {
+  product:{
+    data:{
+      startTime: number;
+      endTime: number;
+    }
+  },
+  bidAmount: number;
+  placeBid: () => void;
+}
+
+const BidButton = ({ product,bidAmount,placeBid}:BidButtonProps) => {
   const { data: session } = useSession();
+  const now = new Date().getTime();
 
-  return (
-    <>
-      {session ? (
-        <AlertDialogTrigger
-          className={`flex-1 border flex items-center justify-center w-full rounded-[4px] px-3 py-1 text-xs bg-[#32c36c] hover:bg-green-600 text-gray-100 capitalize font-semibold text-nowrap`}
-        >
-          Place a bid
-        </AlertDialogTrigger>
-      ) : (
-        <LoginButton title="Login" variant="hot" />
-      )}
-    </>
-  );
+  if(session && now > product?.data?.startTime && now < product?.data?.endTime){
+    return <BidConfirmationDialog placeBid={placeBid} bidAmount={bidAmount} />
+  }
+  else if(!session && now > product?.data?.startTime && now < product?.data?.endTime){
+    return <LoginButton title="Login" variant="hot" />
+  } 
+  else if(now < product?.data?.startTime){
+    return <BidActionButton title="Not Started" variant="end" icon={<FaHourglassStart/>} />
+  } 
+  else if(now > product?.data?.endTime){
+    return <BidActionButton title="Auction End" variant="start" icon={<GrClosedCaption size={22}/>} />
+  }else{
+    return null;
+  }
 };
 
 export default BidButton;
