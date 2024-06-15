@@ -1,21 +1,11 @@
 "use client";
-import { FiPlus, FiMinus } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { BidConfirmationDialog } from "./BidConfirmationDialog";
 import { useSession } from "next-auth/react";
 import { useSocket } from "../providers/socket-provider";
-import BidButton from "./PlaceBidButton";
 import { LuLoader2 } from "react-icons/lu";
+import { BidAmountInput } from "./PlaceBidForm";
 
 interface ProductProps {
   data: {
@@ -25,25 +15,10 @@ interface ProductProps {
   };
 }
 
-export default function PlaceBid({ product }: { product: ProductProps }) {
-  const [bidAmount, setBidAmount] = useState<number>(product?.data?.currentPrice);
-  console.log("Product", product);
+const PlaceBid = ({ product }: { product: ProductProps }) => {
+  const [bidAmount, setBidAmount] = useState(product?.data?.currentPrice);
   const { data: session } = useSession();
   const { socket } = useSocket();
-
-  const incrementBidAmount = () => {
-    setBidAmount((prev) => prev + 20);
-  };
-
-  const decrementBidAmount = () => {
-    if (bidAmount > product?.data?.currentPrice) {
-      setBidAmount((prev) => prev - 20);
-    } else {
-      toast.error(
-        "Minimum bid amount is $" + product?.data?.currentPrice + ".00"
-      );
-    }
-  };
 
   useEffect(() => {
     setBidAmount(product?.data?.currentPrice);
@@ -91,10 +66,7 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
       console.log("A user Connected...");
     };
 
-    const handleBidPlaced = (data: {
-      productId: string;
-      currentPrice: number;
-    }) => {
+    const handleBidPlaced = (data: any) => {
       console.log("Broadcasted message from server", data);
       if (data.productId === product.data._id) {
         setBidAmount(data.currentPrice);
@@ -131,47 +103,16 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
         <div className="text-xs text-gray-500 font-medium w-[5px] bg-[#32c36c] p-[1px] absolute -top-2 left-10 rounded-full"></div>
       </div>
       <div className="flex gap-2  flex-wrap">
-        <form className="flex border items-center flex-1 justify-between">
-          <button
-            type="button"
-            className="px-2 py-2"
-            onClick={decrementBidAmount}
-          >
-            <FiMinus className="w-3 h-4 text-gray-90" />
-          </button>
-          <input
-            type="text"
-            value={`$${bidAmount}.00`}
-            className="text-center text-gray-700 outline-none text-xs font-sans"
-          />
-          <button
-            type="button"
-            className="px-2 py-2"
-            onClick={incrementBidAmount}
-          >
-            <FiPlus className="w-3 h-4 text-gray-900" />
-          </button>
-        </form>
-        <AlertDialog>
-          <BidButton onClick={placeBid} />
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Are you sure you wanted to bid an amount of $${bidAmount}?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will lead you to the highest
-                bidder of this product so are you sure of that?
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel onClick={() => {}}>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={placeBid}>Continue</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <BidAmountInput
+          bidAmount={bidAmount}
+          setBidAmount={setBidAmount}
+          currentPrice={product?.data?.currentPrice}
+        />
+        <BidConfirmationDialog bidAmount={bidAmount} placeBid={placeBid} />
       </div>
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
-}
+};
+
+export default PlaceBid;
