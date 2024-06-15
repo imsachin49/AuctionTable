@@ -8,7 +8,7 @@ import { fetchProducts, searchPlayers } from "@/services/productService";
 import Footer from "@/components/Footer";
 import ProductListing from "@/components/ProductListing";
 import { IoIosSearch } from "react-icons/io";
-import useDebounce from "@/components/hooks/use-debounce";
+import useDebounce from "@/hooks/use-debounce";
 import { LuLoader2 } from "react-icons/lu";
 
 export default function Page() {

@@ -1,6 +1,7 @@
-import { FiPlus, FiMinus } from 'react-icons/fi';
-import { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+"use client";
+import { FiPlus, FiMinus } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,11 +11,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import useClient from '../hooks/SocketClient';
-import { useSession } from 'next-auth/react';
-import BidButton from './PlaceBidButton';
+} from "@/components/ui/alert-dialog";
+import { useSession } from "next-auth/react";
+import { useSocket } from "../providers/socket-provider";
+import BidButton from "./PlaceBidButton";
+import { LuLoader2 } from "react-icons/lu";
 
 interface ProductProps {
   data: {
@@ -25,9 +26,10 @@ interface ProductProps {
 }
 
 export default function PlaceBid({ product }: { product: ProductProps }) {
-  const [bidAmount, setBidAmount] = useState<number>(product?.data?.currentPrice); 
-  const { data: session } = useSession(); 
-  const socket = useClient(); 
+  const [bidAmount, setBidAmount] = useState<number>(product?.data?.currentPrice);
+  console.log("Product", product);
+  const { data: session } = useSession();
+  const { socket } = useSocket();
 
   const incrementBidAmount = () => {
     setBidAmount((prev) => prev + 20);
@@ -38,7 +40,7 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
       setBidAmount((prev) => prev - 20);
     } else {
       toast.error(
-        'Minimum bid amount is $' + product?.data?.currentPrice + '.00'
+        "Minimum bid amount is $" + product?.data?.currentPrice + ".00"
       );
     }
   };
@@ -50,26 +52,33 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
   const placeBid = () => {
     try {
       if (!session) {
-        toast.error('Please login to place a bid.');
+        toast.error("Please login to place a bid.");
         return;
       }
       if (bidAmount <= product?.data?.currentPrice) {
-        toast.error('Bid amount should be greater than the current price.');
+        toast.error("Bid amount should be greater than the current price.");
         return;
       }
       if (socket) {
-        toast.success('Bid placed successfully!');
-        socket.emit('bid', {
+        toast("Placing Your Bid!", {
+          icon: <LuLoader2 className="animate-spin" />,
+          style: {
+            padding: "8px",
+            color: "#f9fafb",
+            background: "#333",
+          },
+        });
+        socket.emit("bid", {
           currentPrice: bidAmount,
           productId: product?.data?._id,
           userId: session?.user?.id,
         });
       } else {
-        toast.error('Socket connection failed!');
-      }  
+        toast.error("Socket connection failed!");
+      }
     } catch (error) {
-      console.error('Error placing bid', error);
-      toast.error('Error placing bid');
+      console.error("Error placing bid", error);
+      toast.error("Error placing bid");
     }
   };
 
@@ -79,14 +88,14 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
     }
 
     const handleConnect = () => {
-      console.log('A user Connected...');
+      console.log("A user Connected...");
     };
 
     const handleBidPlaced = (data: {
       productId: string;
       currentPrice: number;
     }) => {
-      console.log('Broadcasted message from server', data);
+      console.log("Broadcasted message from server", data);
       if (data.productId === product.data._id) {
         setBidAmount(data.currentPrice);
         toast.success(`New bid placed: $${data.currentPrice}`);
@@ -94,18 +103,18 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
     };
 
     const handleBidRejected = (data: any) => {
-      console.log('Bid rejected message from server', data);
+      console.log("Bid rejected message from server", data);
       toast.error(data.message);
     };
 
-    socket.on('connect', handleConnect);
-    socket.on('bidPlaced', handleBidPlaced);
-    socket.on('bidRejected', handleBidRejected);
+    socket.on("connect", handleConnect);
+    socket.on("bidPlaced", handleBidPlaced);
+    socket.on("bidRejected", handleBidRejected);
 
     return () => {
-      socket.off('connect', handleConnect);
-      socket.off('bidPlaced', handleBidPlaced);
-      socket.off('bidRejected', handleBidRejected);
+      socket.off("connect", handleConnect);
+      socket.off("bidPlaced", handleBidPlaced);
+      socket.off("bidRejected", handleBidRejected);
     };
   }, [socket, product?.data?._id]);
 
@@ -123,11 +132,23 @@ export default function PlaceBid({ product }: { product: ProductProps }) {
       </div>
       <div className="flex gap-2  flex-wrap">
         <form className="flex border items-center flex-1 justify-between">
-          <button type="button" className="px-2 py-2" onClick={decrementBidAmount}>
+          <button
+            type="button"
+            className="px-2 py-2"
+            onClick={decrementBidAmount}
+          >
             <FiMinus className="w-3 h-4 text-gray-90" />
           </button>
-          <input type="text" value={`$${bidAmount}.00`} className="text-center text-gray-700 outline-none text-xs font-sans"/>
-          <button type="button" className="px-2 py-2" onClick={incrementBidAmount}>
+          <input
+            type="text"
+            value={`$${bidAmount}.00`}
+            className="text-center text-gray-700 outline-none text-xs font-sans"
+          />
+          <button
+            type="button"
+            className="px-2 py-2"
+            onClick={incrementBidAmount}
+          >
             <FiPlus className="w-3 h-4 text-gray-900" />
           </button>
         </form>

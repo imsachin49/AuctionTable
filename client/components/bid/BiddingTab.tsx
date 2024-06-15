@@ -11,7 +11,7 @@ export default function BiddingTab({ biddingHistory }: any) {
 
   return (
     <div className="p-5">
-      <div className="flex gap-5 flex-wrap">
+      <div className="flex gap-5 flex-wrap items-center justify-center md:justify-start">
         <TabButton tabId={1} activeTab={tab} setTab={setTab} text="Description" />
         <TabButton tabId={2} activeTab={tab} setTab={setTab} text="Auction History" />
         <TabButton tabId={3} activeTab={tab} setTab={setTab} text="Other Auctions" />

@@ -10,7 +10,7 @@ import useSWR from "swr";
 import { fetchProduct, fetchBiddingHistory } from "@/services/productService";
 import { useState, useEffect } from "react";
 import Footer from "@/components/Footer";
-import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
+import ProductDetailsCarousel from "@/components/bid/ProductDetailsCarousel";
 
 export default function Page() {
   const pathname = usePathname();
@@ -23,6 +23,8 @@ export default function Page() {
     productId ? `/api/player/${productId}/bids` : null,
     () => fetchBiddingHistory(productId)
   );
+  // const productData = {};
+  // const biddingHistory = {};
   const [timeRemaining, setTimeRemaining] = useState("");
 
   useEffect(() => {
