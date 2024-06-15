@@ -4,8 +4,7 @@
 1. Add Queues for the AuctionEnd and AuctionStart.
 2. Explore Pub/Sub for the same.
 3. Utilise redis for making the Auction more Real-time and Scalable.
-4. Adding live auctions at the landing page.
-5. Change img src to next/image.
+4. Change img src to next/image.
 
 ## How to run the project
    Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`   
@@ -43,7 +42,7 @@ NEXTAUTH_SECRET=''
 ## Features
     coming soon!
 
-## Tech Stack
+## ⚙️ Tech Stack
     1. Next.js
     2. Next-Auth
     3. MongoDB
