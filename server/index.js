@@ -34,7 +34,7 @@ const server = http.createServer(app);
 // Create Socket.IO instance
 const io = socketIo(server, {
     cors: {
-        origin: 'http://localhost:3000', // Adjust the origin to match your frontend URL
+        origin: ['http://localhost:3000','https://auctiontable.vercel.app'], // Adjust the origin to match your frontend URL
         credentials: true,
     },
 });
