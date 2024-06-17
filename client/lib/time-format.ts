@@ -1,7 +1,6 @@
-import moment from "moment";
+import moment from 'moment';
 
 export const formatTime = (time: number) => {
-    const formattedDate = moment(time).format('MM DD YYYY, hh:mm:ss');
-    const relativeTime = moment(formattedDate).fromNow();
+    const relativeTime = moment(time).fromNow();
     return relativeTime;
 }

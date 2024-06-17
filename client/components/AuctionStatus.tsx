@@ -8,6 +8,7 @@ interface ProductProps {
 
 export default function AuctionStatus({ product }: { product: ProductProps }) {
   const [status, setStatus] = useState("Upcoming");
+  const [stausColor,setstatusColor] = useState("bg-[#32c36c]");
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -17,10 +18,13 @@ export default function AuctionStatus({ product }: { product: ProductProps }) {
 
       if (endDistance < 0) {
         setStatus("Ended");
+        setstatusColor("bg-[#a33434]");
       } else if (startDistance > 0) {
         setStatus("Upcoming");
-      } else {
+        setstatusColor("bg-[#71B7BF]");
+      } else {  
         setStatus("Started");
+        setstatusColor("bg-[#32c36c]");
       }
     };
 
@@ -30,7 +34,7 @@ export default function AuctionStatus({ product }: { product: ProductProps }) {
   }, [product.startTime, product.endTime]);
 
   return (
-    <div className="absolute text-[10px] top-2 left-0 px-[7px] bg-[#32c36c] text-white shadow-md p-1 rounded-r-lg">
+    <div className={`absolute text-[10px] top-2 left-0 px-[7px] ${stausColor} text-white shadow-md p-1 rounded-r-lg`}>
       Auction {status}
     </div>
   );

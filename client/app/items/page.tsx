@@ -13,7 +13,9 @@ import { LuLoader2 } from "react-icons/lu";
 export default function Page() {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  const { data: productsData, isValidating: productsLoading } = useSWR("/",fetchProducts);
+  const { data: productsData, isValidating: productsLoading } = useSWR("/",fetchProducts, {
+    refreshInterval:  120000,  // refresh every 2 minutes
+  });
   const { data: searchProductsData, isValidating: searchLoading } = useSWR(
     debouncedSearchTerm
       ? `/api/player/search/all?name=${debouncedSearchTerm}`

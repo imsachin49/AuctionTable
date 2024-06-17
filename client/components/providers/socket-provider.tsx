@@ -13,13 +13,12 @@ interface SocketContextProps {
   socket: Socket | null;
 }
 
-
 const SocketContext = createContext<SocketContextProps | undefined>(undefined);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const { data: session } = useSession();
-  const serverUrl = "http://localhost:3001";
+  const serverUrl = "https://auctiontable.onrender.com";
 
   useEffect(() => {
     if (!session) {

@@ -52,7 +52,7 @@ const handler = NextAuth({
     async signIn({ user, account }: { user: CustomUser; account: any }) {
       try {
         if (user && account) {
-          const res = await axios.post("http://localhost:3001/api/auth/oauth", {
+          const res = await axios.post("https://auctiontable.onrender.com/api/auth/oauth", {
             email: user.email,
             username: user.name,
             provider: account.provider,
