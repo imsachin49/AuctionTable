@@ -2,6 +2,7 @@ import Image from "next/image";
 import { GoShareAndroid } from "react-icons/go";
 import Link from "next/link";
 import TimeLeft from "./TimeLeft";
+import AuctionStatus from "./AuctionStatus";
 
 interface ProductProps {
   name: string;
@@ -9,6 +10,7 @@ interface ProductProps {
   _id: string;
   pictures: string[];
   startTime: number;
+  endTime: number;
 }
 
 export default function ProductCard({ product }: { product: ProductProps }) {
@@ -23,9 +25,10 @@ export default function ProductCard({ product }: { product: ProductProps }) {
           className="rounded-t-md"
         />
         <TimeLeft product={product} />
+        <AuctionStatus product={product} />
       </div>
       <div className="flex flex-col font-sans gap-[5px] p-3 py-2">
-        <div className="text-sm text-gray-950 font-semibold">
+        <div className="text-sm text-gray-950 font-semibold text-start">
           {product.name}
         </div>
         <div className="text-[10px] text-zinc-500 font-semibold rounded-md flex gap-1">

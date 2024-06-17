@@ -5,9 +5,12 @@ import BiddingHistory from "./BiddingHistory";
 import OtherAuction from "./OtherAuction";
 import TabButton from "./TabButton";
 import AuctionReview from "./AuctionReview";
+import useSWR from "swr";
+import { getTopXOngoingAuctions } from "@/services/productService";
 
 export default function BiddingTab({ biddingHistory,product }: any) {
   const [tab, setTab] = useState<number>(1);
+  const { data: otherauction } = useSWR("/api/player/top/ongoing?x=3",getTopXOngoingAuctions);
 
   return (
     <div className="p-5">
@@ -20,7 +23,7 @@ export default function BiddingTab({ biddingHistory,product }: any) {
       <div className="my-4 max-w-2xl shadow-sm p-1 sm:p-6 py-2 border border-gray-100 rounded-lg">
         {tab === 1 && <LongDescription product={product} />}
         {tab === 2 && <BiddingHistory biddingHistory={biddingHistory} />}
-        {tab === 3 && <OtherAuction />}
+        {tab === 3 && <OtherAuction otherauction={otherauction} />}
         {tab === 4 && <AuctionReview/>}
       </div>
     </div>
