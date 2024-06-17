@@ -21,7 +21,7 @@ const ProductImages = ({ pictures }: ProductDetailsCarouselProps) => {
             key={index}
             src={picture || "/prod-gallery1.png"}
             alt={`img${index}`}
-            className={`flex-1 rounded-md cursor-pointer ${
+            className={`flex-1 rounded-md cursor-pointer max-h-[100px] ${
               currentImage === index
                 ? "border-2 border-[brown]"
                 : "border-2 border-transparent"
