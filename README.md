@@ -1,6 +1,7 @@
 ## AuctionTable  
 
 ## Things to do
+#### Login Delay Fix
 1. Add Queues for the AuctionEnd and AuctionStart.
 2. Explore Pub/Sub for the same.
 3. Utilise redis for making the Auction more Real-time and Scalable.
