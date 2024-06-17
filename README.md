@@ -1,5 +1,13 @@
 ## AuctionTable  
 
+## ScreenShots
+![page-1](https://github.com/imsachin49/AuctionTable/assets/108334265/72fb2222-c320-4469-bace-558414f93180)
+![page-2](https://github.com/imsachin49/AuctionTable/assets/108334265/d7f371dd-1257-4f79-8d6c-d0b241e1c0f6)
+![page-3](https://github.com/imsachin49/AuctionTable/assets/108334265/cecca633-f451-4790-8d78-e783871eafd9)
+![page-4](https://github.com/imsachin49/AuctionTable/assets/108334265/e56986e1-ee85-4935-abe7-02bc29f0f88d)
+![page-5](https://github.com/imsachin49/AuctionTable/assets/108334265/6d47e072-b845-4b0e-b9fa-e34ee95bd322)
+
+
 ## Things to do
 #### Login Delay Fix
 #### Sidebar Links to be added
