@@ -48,7 +48,7 @@ export default function BiddingHistory({
                       src={item?.bidderId?.avatar || "/user-info.avif"}
                       height={30}
                       width={30}
-                      alt={"noImg"}
+                      alt={"noPicture"}
                       className="rounded-full"
                     />
                   </div>

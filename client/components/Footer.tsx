@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
@@ -8,13 +9,7 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row gap-[50px] md:gap-[75px] lg:gap-[100px]">
           <div className="flex flex-col md:flex-row gap-[50px] md:gap-[75px] lg:gap-[100px] items-center">
             <div className="flex flex-col gap-3 items-center">
-              <div className="flex items-center gap-1">
-                <img src={"/auction1.png"} alt="logo" className="w-12 h-12" />
-                <div className="flex flex-col items-center">
-                  <h1 className="text-xl font-bold text-white">Auction Table</h1>
-                  <h6 className="text-xs text-white font-semibold">Fulfill Your Desires!</h6>
-                </div>
-              </div>
+              <Logo isShowFullLogo={true} />
             </div>
 
             <div className="flex flex-row gap-[15px] sm:gap-[25px] md:gap-[40px] lg:gap-[80px] items-center md:items-start">

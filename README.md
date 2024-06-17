@@ -4,8 +4,8 @@
 1. Add Queues for the AuctionEnd and AuctionStart.
 2. Explore Pub/Sub for the same.
 3. Utilise redis for making the Auction more Real-time and Scalable.
-4. Change img src to next/image.
-5. Contact Winner Once Auction Ends via Email/Notification.
+4. Change similar images from the server
+5. Contact Winner Once Auction Ends via Email/Notification.(Future Scope)
 
 ## How to run the project
    Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`   
