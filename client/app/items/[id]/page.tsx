@@ -29,6 +29,7 @@ export default function Page() {
     router.push("/404");
   }
 
+  console.log("productData",productData)
 
   const {
     data: biddingHistory,
@@ -164,7 +165,7 @@ export default function Page() {
         <div className="flex flex-col w-full">
           <div className="w-full flex h-full px-1 lg:px-8 items-center flex-col md:flex-row mb-5">
             <div className="p-2 flex flex-col gap-1 w-full h-full max-w-[550px] md:max-w-full items-center justify-center">
-              <ProductDetailsCarousel />
+              <ProductDetailsCarousel pictures={productData?.data?.pictures} />
             </div>
             <div className="p-2 flex flex-col gap-2 w-full h-full max-w-[550px] md:max-w-full">
               <div className="w-full">

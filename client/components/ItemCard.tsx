@@ -12,6 +12,7 @@ interface IProduct {
   endTime: number; // Assuming endTime is a Unix timestamp in milliseconds
   _id: string;
   picture: string;
+  pictures: string[];
 }
 
 export default function ItemCard({ product }: { product: IProduct }) {
@@ -94,7 +95,7 @@ export default function ItemCard({ product }: { product: IProduct }) {
     <div className="border border-gray-200 rounded-md w-[90%] sm:w-[295px]">
       <div className="relative">
         <img
-          src={`${product?.picture ? product?.picture : "/Iphone.png"}`}
+          src={`${product?.pictures[0] || "/Iphone.png"}`}
           alt="noImg"
           className="rounded-t-md w-full h-[220px]  sm:h-[200px] sm:w-[295px]"
         />

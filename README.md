@@ -5,7 +5,7 @@
 2. Explore Pub/Sub for the same.
 3. Utilise redis for making the Auction more Real-time and Scalable.
 4. Change img src to next/image.
-5. Make admin login and add the functionality to end the auction.
+5. Contact Winner Once Auction Ends via Email/Notification.
 
 ## How to run the project
    Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`   
@@ -44,7 +44,7 @@ NEXTAUTH_SECRET=''
     coming soon!
 
 ## ⚙️ Tech Stack
-    1. Next.js
+    1. Next.js 14
     2. Next-Auth
     3. MongoDB
     4. Socket.io
@@ -52,7 +52,6 @@ NEXTAUTH_SECRET=''
     6. Node.js
     7. Express.js
     8. Tailwind CSS
-    9. Axios
-    10. Moment.js
-    11. React-Toastify
-    12. React-Icons
+    9. Moment.js
+    10. React-Toastify
+    11. React-Icons

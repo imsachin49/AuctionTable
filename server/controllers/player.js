@@ -268,6 +268,26 @@ const insertMultiplePlayers=asyncHandler(async(req,res)=>{
     }
 });
 
+// i have to add pictures to all the players by just adding the pictures array to the player object
+const addPictureaToAllPlayers=asyncHandler(async(req,res)=>{
+    const pictures=req.body.pictures;
+    try {
+        if(!pictures) throw new ApiError(401,"Pictures not Found");
+        const players=await Player.find();
+        if(!players) throw new ApiError(402,"Players not Found");
+        // add pictures to all the players
+        players.forEach(async player=>{
+            player.pictures=pictures;
+            await player.save();
+        });
+        console.log("pictures==>",pictures);
+        res.status(200).json(new ApiResponse(201,players,"Players Updated SuccessFull"));
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(500,error.message,"Internal Serevr Error");
+    }
+});
+
 module.exports = {
     addNewPlayer,
     deletePlayer,
@@ -277,5 +297,6 @@ module.exports = {
     getPlayerById,
     getAllBidsOfPlayer,
     getTopXOngoingPlayers,
-    insertMultiplePlayers
+    insertMultiplePlayers,
+    addPictureaToAllPlayers
 }

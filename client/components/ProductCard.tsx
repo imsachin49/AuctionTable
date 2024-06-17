@@ -1,49 +1,44 @@
 import Image from "next/image";
 import { GoShareAndroid } from "react-icons/go";
 import Link from "next/link";
+import TimeLeft from "./TimeLeft";
 
-export default function ProductCard() {
+interface ProductProps {
+  name: string;
+  currentPrice: number;
+  _id: string;
+  pictures: string[];
+  startTime: number;
+}
+
+export default function ProductCard({ product }: { product: ProductProps }) {
   return (
-    <div className="rounded-sm shadow-md">
+    <div className="rounded-md shadow-md">
       <div className="relative w-[280px] h-[200px]">
         <Image
-          src="/products/home1.jpg"
+          src={product.pictures[0] || "/products/home1.jpg"}
           alt="product"
-          fill
-          className="rounded-t-sm"
+          layout="fill"
+          objectFit="cover"
+          className="rounded-t-md"
         />
-        <div className="absolute bottom-0 flex w-full bg-[#1F2230] gap-1 p-2 py-1 items-center justify-center">
-          <div className="flex text-white items-center justify-center p-1 px-3 flex-col rounded-md rounded-tr-[0] rounded-bl-[0] border border-[#929399]">
-            <div className="font-normal">198</div>
-            <div className="text-[8px]">Days</div>
-          </div>
-          <div className="flex text-white items-center justify-center p-1 px-3 flex-col rounded-md rounded-tr-[0] rounded-bl-[0] border border-[#929399]">
-            <div className="font-normal">16</div>
-            <div className="text-[8px]">Hours</div>
-          </div>
-          <div className="flex text-white items-center justify-center p-1 px-3 flex-col rounded-md rounded-tr-[0] rounded-bl-[0] border border-[#929399]">
-            <div className="font-normal">50</div>
-            <div className="text-[8px]">Minutes</div>
-          </div>
-          <div className="flex text-white items-center justify-center p-1 px-3 flex-col rounded-md rounded-tr-[0] rounded-bl-[0] border border-[#929399]">
-            <div className="font-normal">02</div>
-            <div className="text-[8px]">Seconds</div>
-          </div>
-        </div>
+        <TimeLeft product={product} />
       </div>
       <div className="flex flex-col font-sans gap-[5px] p-3 py-2">
-        <div className="text-sm text-gray-950 font-semibold font-sans">
-          Couple Wedding Ring
+        <div className="text-sm text-gray-950 font-semibold">
+          {product.name}
         </div>
-        <div className="text-[10px] font-sans text-zinc-500 font-semibold rounded-md flex  gap-1">
-          <div className="text-[12px] text-gray-700 font-normal font-sans">
+        <div className="text-[10px] text-zinc-500 font-semibold rounded-md flex gap-1">
+          <div className="text-[12px] text-gray-700 font-normal">
             Current Bid:{" "}
-            <span className="font-bold text-gray-600">235,90$</span>
+            <span className="font-bold text-gray-600 text-md">
+              ${product.currentPrice}.00
+            </span>
           </div>
         </div>
-        <div className="w-full flex font-sans text-sm font-medium mb-3 items-center justify-between mt-1">
+        <div className="w-full flex text-sm font-medium mb-3 items-center justify-between mt-1">
           <Link
-            href={`/items/${"123"}`}
+            href={`/items/${product._id}`}
             className="w-fit border flex items-center justify-center rounded-[4px] px-2 py-[5px] text-xs bg-[#32c36c] hover:bg-green-600 text-gray-100 capitalize font-semibold"
           >
             View Details
