@@ -50,11 +50,9 @@ Change the directory to the project folder=> `cd AuctionTable`
       NEXT_PUBLIC_SOCKET_URL=''
       NEXTAUTH_SECRET=''
 
-## Things to do
+## Things to do(Future Scope)
 1. Add Queues for the AuctionEnd and AuctionStart.
 2. Explore Pub/Sub for the same.
 3. Utilise redis for making the Auction more Real-time and Scalable.
-4. Change similar images from the server
-5. Contact Winner Once Auction Ends via Email/Notification.(Future Scope)
-6. Login Delay Fix
-7. Sidebar Links to be added
+4. Payement by Winner Once Auction Ends & communication via Email/Notification.
+5. Sidebar Pages to be added.
