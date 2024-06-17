@@ -9,9 +9,9 @@ const playerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    picture: {
-        type: String,
-        // required: true
+    pictures:{
+        type: [String],
+        required: true
     },
     sellerId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -36,10 +36,6 @@ const playerSchema = new mongoose.Schema({
         default: function () {
             return this.startPrice;
         }
-    },
-    winnerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
     },
     bids: [
         {

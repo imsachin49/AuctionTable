@@ -5,6 +5,7 @@
 2. Explore Pub/Sub for the same.
 3. Utilise redis for making the Auction more Real-time and Scalable.
 4. Change img src to next/image.
+5. Make admin login and add the functionality to end the auction.
 
 ## How to run the project
    Clone the repository=> `git clone https://github.com/imsachin49/AuctionTable.git`   

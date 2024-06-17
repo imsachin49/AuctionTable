@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const verifyToken = asyncHandler(async (req, res, next) => {
   const token = req.cookies?.token || req.header("Authorization")?.replace("Bearer ", "");
+  console.log("token", token);
 
   if (!token) {
     throw new ApiError(401, "Unauthorized request");
@@ -28,7 +29,11 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 
 const verifyTokenAndAdmin = asyncHandler(async (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.role === "admin") {
+    if(!req?.user?.role){
+      throw new ApiError(403, "You don't have sufficient permissions to do that!");
+    }
+    else if (req?.user?.role === "admin"){
+      console.log("Im here");
       next();
     } else {
       throw new ApiError(403, "You are not allowed to do that!");
@@ -38,7 +43,10 @@ const verifyTokenAndAdmin = asyncHandler(async (req, res, next) => {
 
 const verifyTokenAndSeller = asyncHandler(async (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.role === "seller" || req.user.role === "admin") {
+    if(!req?.user?.role){
+      throw new ApiError(403, "You don't have sufficient permissions to do that!");
+    }
+    else if (req?.user?.role === "seller" || req.user.role === "admin") {
       next();
     } else {
       throw new ApiError(403, "You are not allowed to do that!");

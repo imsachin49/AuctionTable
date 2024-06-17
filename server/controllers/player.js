@@ -1,17 +1,17 @@
 const { asyncHandler } = require('../utils/asyncHandler');
 const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const Player = require('../models/Player');
-const { convertTimeToTimestamp, convertTimeStampToTime } = require('../utils/timeConversions');
 
 // add a new player
 const addNewPlayer = asyncHandler(async (req, res) => {
-    const { name, description, startTime, endTime, startPrice,picture } = req.body;
+    const { name, description, startTime, endTime, startPrice,pictures } = req.body;
     const sellerId = req.user.id;
 
     try {
-        if (!name || !description || !startTime || !endTime || !startPrice || !picture) {
+        if (!name || !description || !startTime || !endTime || !startPrice || !pictures) {
             throw new ApiError(401, "All Fields are required !!");
         }
 
@@ -49,8 +49,9 @@ const addNewPlayer = asyncHandler(async (req, res) => {
             startTime,
             endTime,
             startPrice,
-            picture,
-            sellerId
+            pictures,
+            sellerId,
+            currentPrice: startPrice
         });
 
         // Save the player
@@ -70,29 +71,15 @@ const addNewPlayer = asyncHandler(async (req, res) => {
 // Delete a player
 const deletePlayer = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const userId = req.user.id;
+    if (!id)  throw new ApiError(401, "Player id is required");
 
     try {
-        if (!id) {
-            throw new ApiError(401, "Player id is required");
-        }
-
-        if (!userId) {
-            throw new ApiError(402, "User id is required");
-        }
-
         const player = await Player.findById(id);
-
-        if (!player) {
-            throw new ApiError(403, "Player not found");
-        }
+        if (!player) throw new ApiError(403, "Player not found");
 
         const deletedPlayer = await Player.findByIdAndDelete(id);
-
-        if (!deletedPlayer) {
-            throw new ApiError(405, "Unable to delete the player");
-        }
-
+        if (!deletedPlayer) throw new ApiError(405, "Unable to delete the player");
+        
         res.status(200).json(new ApiResponse(200, deletedPlayer, "Player deleted successfully"));
     } catch (error) {
         throw new ApiError(500, error.message || "Internal Server Error");
@@ -103,9 +90,8 @@ const deletePlayer = asyncHandler(async (req, res) => {
 const getAllPlayers = asyncHandler(async (req, res) => {
     try {
         const players = await Player.find();
-        if (!players) {
-            throw new ApiError(401, "No players found");
-        }
+        if (!players) throw new ApiError(401, "No players found");
+
         res.status(200).json(new ApiResponse(200, players, "Players fetched successfully"));
     } catch (error) {
         throw new ApiError(500, error.message || "Internal Server Error");
@@ -115,8 +101,8 @@ const getAllPlayers = asyncHandler(async (req, res) => {
 // update a player
 const updatePlayer = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { name, description, startTime, endTime, startPrice,picture } = req.body;
-    const userId = req.user.id;
+    if(!id) throw new ApiError(401,"Please provide the player Id");
+    const { name, description, startTime, endTime, startPrice,pictures}=req.body;
 
     try {
         // object to store the updated fields
@@ -125,7 +111,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
 
         if (name) updateFields.name = name;
         if (description) updateFields.description = description;
-        if (picture) updateFields.picture = picture;
+        if (pictures) updateFields.pictures = pictures;
         // check if the start time is in the future
         if (startTime) {
             if (startTime <= now) {
@@ -149,22 +135,12 @@ const updatePlayer = asyncHandler(async (req, res) => {
                 throw new ApiError(402, "Start Price can't be zero or lesser");
             } else {
                 updateFields.startPrice = startPrice;
+                updateFields.currentPrice = startPrice;
             }
-        }
-
-        // Check if the player id is provided
-        if (!id) {
-            throw new ApiError(401, "Player id is required");
-        }
-
-        // Check if the user is logged in===>done by the middleware too..
-        if (!userId) {
-            throw new ApiError(402, "User id is required");
         }
 
         // Check if the player exists
         const player = await Player.findById(id);
-        console.log("player", player)
         if (!player) {
             throw new ApiError(404, "Player not found");
         }
@@ -184,8 +160,12 @@ const updatePlayer = asyncHandler(async (req, res) => {
         }
 
         // if both start time and end time are provided then check if start time is before end time
+        // and both are in the future
         if (startTime && endTime) {
-            if (startTime > endTime) {
+            if (startTime < now || endTime < now) {
+                throw new ApiError(401, "Start time and end time must be in the future");
+            }
+            else if (startTime > endTime) {
                 throw new ApiError(401, "Start time must be before end time");
             }
         }
@@ -203,9 +183,17 @@ const updatePlayer = asyncHandler(async (req, res) => {
 
 // get Player by Id
 const getPlayerById=asyncHandler(async(req,res)=>{
-    if(!req.params.id) throw new ApiError(401,"player Id not Found");
+    if(!req.params.id){
+        res.status(400).json(new ApiResponse(404, null, "Player ID not Found"));
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        // throw new ApiError(401, "Invalid player ID format");
+        res.status(404).json(new ApiResponse(404, null, "Invalid player ID format"));
+    }
+
     try {
         const player=await Player.findById(req.params.id);
+        if(!player) res.status(404).json(new ApiResponse(404,null,"Player not Found"));
         res.status(200).json(new ApiResponse(201,player,"Player Found SuccessFull"));
     } catch (error) {
         console.log(error);
@@ -213,6 +201,7 @@ const getPlayerById=asyncHandler(async(req,res)=>{
     }
 });
 
+// search player by name
 const searchPlayer = asyncHandler(async (req, res) => {
     const name=req.query.name;
 
@@ -227,6 +216,7 @@ const searchPlayer = asyncHandler(async (req, res) => {
     }
 });
 
+// get all bids of a player
 const getAllBidsOfPlayer=asyncHandler(async(req,res)=>{
     if(!req.params.id) throw new ApiError(401,"Player Id not Found");
     try {
@@ -243,11 +233,35 @@ const getAllBidsOfPlayer=asyncHandler(async(req,res)=>{
     }
 });
 
+// get top x ongoing players
 const getTopXOngoingPlayers=asyncHandler(async(req,res)=>{
     const x=req.query.x;
     try {
         const players=await Player.find({endTime:{$gt:new Date().getTime()}}).sort({currentPrice:-1}).limit(x);
         res.status(200).json(new ApiResponse(201,players,"Top Ongoing Players Found SuccessFull"));
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(500,error.message,"Internal Serevr Error");
+    }
+});
+
+const insertMultiplePlayers=asyncHandler(async(req,res)=>{
+    const players=req.body;
+    try {
+        // with players add the current user as the sellerId
+        const sellerId=req.user.id;
+        if(!sellerId) throw new ApiError(401,"Seller Id not Found");
+        if(!players) throw new ApiError(402,"Players not Found");
+        // insert all the players 
+        // making sure all players have valid fields
+        players.forEach(player=>{
+            if(!player.name || !player.description || !player.startTime || !player.endTime || !player.startPrice || !player.pictures) throw new ApiError(403,"All Fields are required");
+            if(player.startTime<new Date().getTime() || player.endTime<new Date().getTime()) throw new ApiError(404,"Start time and end time must be in the future");
+            if(player.startTime>player.endTime) throw new ApiError(405,"Start time must be before end time");
+            if(player.startPrice<=0) throw new ApiError(406,"Start Price can't be zero or lesser");
+        });
+        const insertedPlayers=await Player.insertMany(players.map(player=>({...player,sellerId})));
+        res.status(200).json(new ApiResponse(201,"insertedPlayers","Players Inserted SuccessFull"));
     } catch (error) {
         console.log(error);
         throw new ApiError(500,error.message,"Internal Serevr Error");
@@ -262,5 +276,6 @@ module.exports = {
     searchPlayer,
     getPlayerById,
     getAllBidsOfPlayer,
-    getTopXOngoingPlayers
+    getTopXOngoingPlayers,
+    insertMultiplePlayers
 }

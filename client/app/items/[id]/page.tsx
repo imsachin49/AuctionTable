@@ -5,7 +5,7 @@ import BiddingDescription from "@/components/bid/BiddingDescription";
 import BiddingProductImage from "@/components/bid/BiddingProductImage";
 import BiddingTab from "@/components/bid/BiddingTab";
 import PlaceBid from "@/components/bid/PlaceBid";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useSWR from "swr";
 import { fetchProduct, fetchBiddingHistory } from "@/services/productService";
 import { useState, useEffect } from "react";
@@ -15,13 +15,20 @@ import ProductDetailsCarousel from "@/components/bid/ProductDetailsCarousel";
 export default function Page() {
   const pathname = usePathname();
   const productId = pathname.split("/")[2];
-  const { data: productData, error} = useSWR(
+  const router=useRouter();
+  const { data: productData, error, } = useSWR(
     productId ? `/api/player/${productId}` : null,
     () => fetchProduct(productId),
     {
       refreshInterval: 15000, // Refresh every 15 seconds (10000 milliseconds) for making sure the time remaining is accurate
     }
   );
+
+  console.log("productData",productData)
+  if(productData?.statusCode===404){
+    router.push("/404");
+  }
+
 
   const {
     data: biddingHistory,
@@ -173,7 +180,7 @@ export default function Page() {
           </div>
 
           <div className="w-full">
-            <BiddingTab biddingHistory={biddingHistory} />
+            <BiddingTab biddingHistory={biddingHistory} product={productData} />
           </div>
         </div>
       </div>

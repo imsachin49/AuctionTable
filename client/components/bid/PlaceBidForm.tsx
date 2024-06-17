@@ -18,20 +18,21 @@ export const BidAmountInput = ({
   endTime,
   isLoggedIn
 }: BidAmountInputProps) => {
+  const showInput=(startTime>new Date().getTime() || endTime<new Date().getTime() || !isLoggedIn);
+
   const incrementBidAmount = () => {
+    if(showInput) return;
     setBidAmount((prev: any) => prev + 20);
   };
 
   const decrementBidAmount = () => {
+    if(showInput) return;
     if (bidAmount > currentPrice) {
       setBidAmount((prev: any) => prev - 20);
     } else {
       toast.error(`Minimum bid amount is $${currentPrice}.00`);
     }
   };
-
-  // conditionally show input based on time and user login status
-  const showInput=(startTime>new Date().getTime() || endTime<new Date().getTime() || !isLoggedIn);
 
   return (
     <form className={`flex border items-center flex-1 justify-between`}> 

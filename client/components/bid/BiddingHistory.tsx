@@ -19,10 +19,11 @@ export default function BiddingHistory({
     };
   };
 }) {
-  if (!biddingHistory) {
+  
+  if (biddingHistory?.data?.bids?.length === 0) {
     return (
-      <div className="flex items-center justify-center h-[230px]">
-        <p className="text-sm text-gray-500">No Bidding History</p>
+      <div className="text-xs font-sans p-8 text-center">
+        No Bidding History Yet!!
       </div>
     );
   }

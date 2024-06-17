@@ -1,20 +1,23 @@
 import React from "react";
 import { MdOutlineDoneAll } from "react-icons/md";
 
-export default function LongDescription() {
+interface LongDescriptionProps {
+  product: {
+    data:{
+      name: string;
+      description: string;
+    }
+  }
+}
+
+export default function LongDescription({product}: LongDescriptionProps) {
   return (
     <>
       <div className="font-bold">
-        How can have anything you ant in life if you ?
+        {product?.data?.name || "Product Name"}
       </div>
-      <span className="text-xs text-gray-500">
-        If you’ve been following the crypto space, you’ve likely heard of
-        Non-Fungible Tokens (Biddings), more popularly referred to as ‘Crypto
-        Collectibles.’ The world of Biddings is growing rapidly. It seems there
-        is no slowing down of these assets as they continue to go up in price.
-        This growth comes with the opportunity for people to start new
-        businesses to create and capture value. The market is open for players
-        in every kind of field. Are you a collector.
+      <span className="text-xs text-blue-950">
+        {product?.data?.description || "Product Description"}
         <br />
         <br />
         But getting your own auction site up and running has always required

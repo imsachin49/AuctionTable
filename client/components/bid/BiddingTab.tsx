@@ -6,7 +6,7 @@ import OtherAuction from "./OtherAuction";
 import TabButton from "./TabButton";
 import AuctionReview from "./AuctionReview";
 
-export default function BiddingTab({ biddingHistory }: any) {
+export default function BiddingTab({ biddingHistory,product }: any) {
   const [tab, setTab] = useState<number>(1);
 
   return (
@@ -18,7 +18,7 @@ export default function BiddingTab({ biddingHistory }: any) {
         <TabButton tabId={4} activeTab={tab} setTab={setTab} text="Reviews(0)" />
       </div>
       <div className="my-4 max-w-2xl shadow-sm p-1 sm:p-6 py-2 border border-gray-100 rounded-lg">
-        {tab === 1 && <LongDescription />}
+        {tab === 1 && <LongDescription product={product} />}
         {tab === 2 && <BiddingHistory biddingHistory={biddingHistory} />}
         {tab === 3 && <OtherAuction />}
         {tab === 4 && <AuctionReview/>}
