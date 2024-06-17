@@ -1,7 +1,6 @@
 # AuctionTable: Real-Time Auctions Platform
-   AuctionTable is a cutting-edge real-time auctions platform designed to offer a seamless, dynamic, and engaging bidding experience. Utilizing advanced WebSocket technology, AuctionTable    provides instantaneous updates on bid statuses, creating a highly competitive and transparent auction environment.
-
-
+    AuctionTable is a real-time auction platform that allows users to participate in live auctions, place bids, and monitor the status of their bids in real-time. The platform is designed to provide a seamless and engaging user experience, with instant updates on bid statuses and dynamic bid adjustments. AuctionTable also features secure authentication, robust security measures, and social sharing capabilities, making it a comprehensive and user-friendly auction solution.
+      
 ## 💡 Key Features:
    - Real-Time Updates
    - Secure Authentication
@@ -17,11 +16,12 @@
     2. Node.js
     3. Express.js
     4. MongoDB
-    5. Socket.io
+    5. Socket.io/Socket.io-client
     6. Next-Auth
     7. SWR Hook
     8. Tailwind CSS
-    9. React Context
+    9. Shadow-UI
+    10. React Context
    
 ## 📷 ScreenShots
 ![page-1](https://github.com/imsachin49/AuctionTable/assets/108334265/72fb2222-c320-4469-bace-558414f93180)

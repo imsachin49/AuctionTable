@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { GoShareAndroid } from "react-icons/go";
 import Link from "next/link";
 import TimeLeft from "./TimeLeft";
 import AuctionStatus from "./AuctionStatus";
+import ShareButton from "./ShareButton";
 
 interface ProductProps {
   name: string;
@@ -46,9 +46,7 @@ export default function ProductCard({ product }: { product: ProductProps }) {
           >
             View Details
           </Link>
-          <button className="mr-1 border border-gray-100 rounded-full p-1 bg-gray-100 hover:bg-gray-500 hover:text-white">
-            <GoShareAndroid />
-          </button>
+          <ShareButton product={product} />
         </div>
       </div>
     </div>
