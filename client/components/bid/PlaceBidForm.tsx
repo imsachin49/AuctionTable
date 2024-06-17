@@ -43,6 +43,7 @@ export const BidAmountInput = ({
         type="text"
         value={`$${bidAmount}.00`}
         className="text-center text-gray-950 outline-none text-xs"
+        readOnly
       />
       <button type="button" className={`px-2 py-2 ${showInput && "cursor-not-allowed"}`} onClick={incrementBidAmount}>
         <FiPlus className="w-3 h-4 text-gray-900" />

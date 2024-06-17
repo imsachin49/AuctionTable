@@ -2,7 +2,6 @@
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import BiddingDescription from "@/components/bid/BiddingDescription";
-import BiddingProductImage from "@/components/bid/BiddingProductImage";
 import BiddingTab from "@/components/bid/BiddingTab";
 import PlaceBid from "@/components/bid/PlaceBid";
 import { usePathname, useRouter } from "next/navigation";
@@ -10,7 +9,7 @@ import useSWR from "swr";
 import { fetchProduct, fetchBiddingHistory } from "@/services/productService";
 import { useState, useEffect } from "react";
 import Footer from "@/components/Footer";
-import ProductDetailsCarousel from "@/components/bid/ProductDetailsCarousel";
+import ProductImages from "@/components/bid/ProductImages";
 
 export default function Page() {
   const pathname = usePathname();
@@ -24,17 +23,13 @@ export default function Page() {
     }
   );
 
-  console.log("productData",productData)
   if(productData?.statusCode===404){
     router.push("/404");
   }
 
-  console.log("productData",productData)
-
   const {
     data: biddingHistory,
     error: biddingHistoryError,
-    mutate,
   } = useSWR(
     productId ? `/api/player/${productId}/bids` : null,
     () => fetchBiddingHistory(productId),
@@ -165,7 +160,7 @@ export default function Page() {
         <div className="flex flex-col w-full">
           <div className="w-full flex h-full px-1 lg:px-8 items-center flex-col md:flex-row mb-5">
             <div className="p-2 flex flex-col gap-1 w-full h-full max-w-[550px] md:max-w-full items-center justify-center">
-              <ProductDetailsCarousel pictures={productData?.data?.pictures} />
+              <ProductImages pictures={productData?.data?.pictures} />
             </div>
             <div className="p-2 flex flex-col gap-2 w-full h-full max-w-[550px] md:max-w-full">
               <div className="w-full">

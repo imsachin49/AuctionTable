@@ -23,7 +23,6 @@ const PlaceBid = ({ product }: { product: ProductProps }) => {
   const [bidAmount, setBidAmount] = useState(product?.data?.currentPrice);
   const { data: session } = useSession();
   const { socket } = useSocket();
-  console.log("token", session?.user?.token);
 
   useEffect(() => {
     setBidAmount(product?.data?.currentPrice);

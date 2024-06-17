@@ -6,8 +6,7 @@ interface ProductDetailsCarouselProps {
   pictures: string[];
 }
 
-const ProductDetailsCarousel = ({ pictures }: ProductDetailsCarouselProps) => {
-  console.log("pictures", pictures);
+const ProductImages = ({ pictures }: ProductDetailsCarouselProps) => {
   const [currentImage, setCurrentImage] = useState<number>(0);
 
   const handleImageChange = (index: number) => {
@@ -33,7 +32,7 @@ const ProductDetailsCarousel = ({ pictures }: ProductDetailsCarouselProps) => {
       </div>
       <div className="carousel-container flex justify-center items-center w-full md:max-h-[290px] lg:max-h-[260px]">
         <img
-          src={pictures[currentImage] || "/prod-gallery1.png"}
+          src={pictures?.length>0 ? pictures[currentImage] : "/prod-gallery1.png"}
           alt="currentImage"
           className="w-full h-full object-cover rounded-md"
         />
@@ -42,4 +41,4 @@ const ProductDetailsCarousel = ({ pictures }: ProductDetailsCarouselProps) => {
   );
 };
 
-export default ProductDetailsCarousel;
+export default ProductImages;
