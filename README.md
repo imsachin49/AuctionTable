@@ -1,9 +1,16 @@
-## AuctionTable  
-   Auction table is a ....
+# AuctionTable: Real-Time Auctions Platform
+   AuctionTable is a cutting-edge real-time auctions platform designed to offer a seamless, dynamic, and engaging bidding experience. Utilizing advanced WebSocket technology, AuctionTable    provides instantaneous updates on bid statuses, creating a highly competitive and transparent auction environment.
 
-## Features
-   - xyz
-   - hgfgh
+
+## 💡 Key Features:
+   - Real-Time Updates
+   - Secure Authentication
+   - Atomic Operations (DB Transactions)
+   - Dynamic Bid Adjustments
+   - Instant Notifications
+   - Seamless User Experience
+   - Robust Security
+   - Social Sharing
 
 ## ⚙️ Tech Stack
     1. Next-14
