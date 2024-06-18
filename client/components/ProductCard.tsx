@@ -15,21 +15,21 @@ interface ProductProps {
 
 export default function ProductCard({ product }: { product: ProductProps }) {
   return (
-    <div className="rounded-md shadow-md">
-      <div className="relative w-[280px] h-[200px]">
+    <div className="rounded-md shadow-md  w-full">
+      <div className="relative w-full h-[200px]">
         <Image
           src={product.pictures[0] || "/products/home1.jpg"}
           alt="product"
           layout="fill"
           objectFit="cover"
-          className="rounded-t-md"
+          className="rounded-t-md w-full"
         />
         <TimeLeft product={product} />
         <AuctionStatus product={product} />
       </div>
       <div className="flex flex-col font-sans gap-[5px] p-3 py-2">
         <div className="text-sm text-gray-950 font-semibold text-start">
-          {product.name}
+          {product?.name?.slice(0, 40)}
         </div>
         <div className="text-[10px] text-zinc-500 font-semibold rounded-md flex gap-1">
           <div className="text-[12px] text-gray-700 font-normal">

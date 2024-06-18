@@ -11,11 +11,11 @@ const sidebarItems = [
   { name: "Home", icon: GoHome },
   { name: "Explore", icon: MdOutlineExplore },
   { name: "Bids", icon: IoIosHeartEmpty },
-  { name: "Sold List", icon: GrMoney },
   { name: "Profile", icon: FaRegUser },
-  { name: "Bid History", icon: LuHistory },
   { name: "Contact us", icon: GrContact },
-  { name: "Settings", icon: CiSettings }
+  // { name: "Sold List", icon: GrMoney },
+  // { name: "Bid History", icon: LuHistory },
+  // { name: "Settings", icon: CiSettings }
 ];
 
 export default sidebarItems;

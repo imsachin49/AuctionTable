@@ -34,7 +34,7 @@ export default function AuctionStatus({ product }: { product: ProductProps }) {
   }, [product.startTime, product.endTime]);
 
   return (
-    <div className={`absolute text-[10px] top-2 left-0 px-[7px] ${stausColor} text-white shadow-md p-1 rounded-r-lg`}>
+    <div className={`absolute text-[10px] top-1 right-0 px-[7px] ${stausColor} text-white shadow-md p-1 rounded-l-lg`}>
       Auction {status}
     </div>
   );

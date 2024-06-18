@@ -14,7 +14,7 @@ import BidActionButton from "./BidActionButton";
 
 export const BidConfirmationDialog = ({ bidAmount, placeBid }: any) => (
   <AlertDialog>
-  <AlertDialogTrigger>
+  <AlertDialogTrigger className="w-full sm:w-auto">
     <BidActionButton title="Place A Bid" variant="bid" icon={<RiAuctionFill/>}  />          
   </AlertDialogTrigger>
   <AlertDialogContent>

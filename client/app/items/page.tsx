@@ -33,7 +33,7 @@ export default function Page() {
     <>
       <Navbar />
       <div className="flex min-h-fit">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className="w-full flex flex-col items-center">
           <div className="w-full flex items-center justify-center">
             <div className="my-3 w-full">

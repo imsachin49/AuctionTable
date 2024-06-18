@@ -17,7 +17,13 @@ interface ProductProps {
   };
 }
 
-const PlaceBid = ({ product, mutate }: { product: ProductProps, mutate: any }) => {
+const PlaceBid = ({
+  product,
+  mutate,
+}: {
+  product: ProductProps;
+  mutate: any;
+}) => {
   const [bidAmount, setBidAmount] = useState(product?.data?.currentPrice);
   const { data: session } = useSession();
   const { socket } = useSocket();
@@ -30,12 +36,7 @@ const PlaceBid = ({ product, mutate }: { product: ProductProps, mutate: any }) =
     if (!session) return;
 
     if (bidAmount <= product?.data?.currentPrice) {
-      toast.error(
-        "Bid amount should be greater than the current price=" +
-        product?.data?.currentPrice +
-        ", bidAmount=" +
-        bidAmount
-      );
+      toast.error("Bid amount should be greater than the current price");
       return;
     }
 
@@ -111,7 +112,7 @@ const PlaceBid = ({ product, mutate }: { product: ProductProps, mutate: any }) =
   }, [socket, product?.data?._id, mutate]);
 
   return (
-    <div className="border border-gray-100 p-4 pt-3 w-full rounded-md shadow-md">
+    <div className="border border-gray-100 px-2 py-3 sm:p-4 w-full rounded-md shadow-md">
       <div className="font-bold text-xl pb-[2px] text-gray-950">
         Base Price: ${product?.data?.startPrice}.00
       </div>

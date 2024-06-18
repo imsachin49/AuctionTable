@@ -13,7 +13,7 @@ import ProductImages from "@/components/bid/ProductImages";
 
 export default function Page() {
   const [timeRemaining, setTimeRemaining] = useState("");
-  
+
   const pathname = usePathname();
   const productId = pathname.split("/")[2];
   const router = useRouter();
@@ -21,21 +21,20 @@ export default function Page() {
     productId ? `/api/player/${productId}` : null,
     () => fetchProduct(productId),
     {
-      refreshInterval: 15000, // Refresh every 15 seconds
+      refreshInterval: 60000, // Refresh every minute
     }
   );
-  
+
   if (productData?.statusCode === 404) {
     router.push("/404");
   }
-  
+
   const {
     data: biddingHistory,
     error: biddingHistoryError,
     mutate: mutateBids,
-  } = useSWR(
-    productId ? `/api/player/${productId}/bids` : null,
-    () => fetchBiddingHistory(productId)
+  } = useSWR(productId ? `/api/player/${productId}/bids` : null, () =>
+    fetchBiddingHistory(productId)
   );
 
   useEffect(() => {
@@ -79,13 +78,19 @@ export default function Page() {
           endTimeString += ` ${endDays} day${endDays !== 1 ? "s" : ""}`;
         }
         if (remainingEndHours > 0) {
-          endTimeString += ` ${remainingEndHours} hour${remainingEndHours !== 1 ? "s" : ""}`;
+          endTimeString += ` ${remainingEndHours} hour${
+            remainingEndHours !== 1 ? "s" : ""
+          }`;
         }
         if (remainingEndMinutes > 0) {
-          endTimeString += ` ${remainingEndMinutes} minute${remainingEndMinutes !== 1 ? "s" : ""}`;
+          endTimeString += ` ${remainingEndMinutes} minute${
+            remainingEndMinutes !== 1 ? "s" : ""
+          }`;
         }
         if (remainingEndSeconds > 0) {
-          endTimeString += ` ${remainingEndSeconds} second${remainingEndSeconds !== 1 ? "s" : ""}`;
+          endTimeString += ` ${remainingEndSeconds} second${
+            remainingEndSeconds !== 1 ? "s" : ""
+          }`;
         }
 
         setTimeRemaining(`Auction ends in ${endTimeString}`);
@@ -118,13 +123,19 @@ export default function Page() {
         timeString += ` ${days} day${days !== 1 ? "s" : ""}`;
       }
       if (remainingHours > 0) {
-        timeString += ` ${remainingHours} hour${remainingHours !== 1 ? "s" : ""}`;
+        timeString += ` ${remainingHours} hour${
+          remainingHours !== 1 ? "s" : ""
+        }`;
       }
       if (remainingMinutes > 0) {
-        timeString += ` ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
+        timeString += ` ${remainingMinutes} minute${
+          remainingMinutes !== 1 ? "s" : ""
+        }`;
       }
       if (remainingSeconds > 0) {
-        timeString += ` ${remainingSeconds} second${remainingSeconds !== 1 ? "s" : ""}`;
+        timeString += ` ${remainingSeconds} second${
+          remainingSeconds !== 1 ? "s" : ""
+        }`;
       }
 
       setTimeRemaining(`The auction will start in ${timeString}`);
@@ -138,17 +149,13 @@ export default function Page() {
   return (
     <>
       <Navbar />
-      <div className="flex">
-        <div className="hidden lg:block">
-          <Sidebar />
-        </div>
-
-        <div className="flex flex-col w-full">
-          <div className="w-full flex h-full px-1 lg:px-8 items-center flex-col md:flex-row mb-5">
-            <div className="p-2 flex flex-col gap-1 w-full h-full max-w-[550px] md:max-w-full items-center justify-center">
+      <div className="flex items-center justify-center">
+        <div className="flex flex-col mx-1 md:mx-4 gap-1 items-center md:items-start justify-start sm:justify-start w-full">
+          <div className="flex h-full px-1 lg:px-3 items-center flex-col md:flex-row mb-5 py-2 w-full gap-2">
+            <div className="flex flex-col w-full h-full items-center justify-center max-w-[600px]">
               <ProductImages pictures={productData?.data?.pictures} />
             </div>
-            <div className="p-2 flex flex-col gap-2 w-full h-full max-w-[550px] md:max-w-full">
+            <div className="flex flex-col gap-2 w-full h-full max-w-[610px]">
               <div className="w-full">
                 <BiddingDescription
                   product={productData}
@@ -161,7 +168,7 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="w-full">
+          <div className="w-full max-w-[610px]">
             <BiddingTab biddingHistory={biddingHistory} product={productData} />
           </div>
         </div>

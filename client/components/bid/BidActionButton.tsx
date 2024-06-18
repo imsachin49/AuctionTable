@@ -16,7 +16,7 @@ export default function BidActionButton({
     <Button
       variant={variant}
       type="button"
-      className="px-4 py-1 flex-1 flex items-center justify-center font-semibold gap-2 capitalize text-nowrap"
+      className="px-4 py-1 flex-1 flex items-center justify-center font-semibold gap-2 capitalize text-nowrap w-full"
     >
       {icon}
       <span>{title}</span>
