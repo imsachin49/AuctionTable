@@ -4,7 +4,7 @@ import ProductCard from "../ProductCard";
 export default function OtherAuction({ otherauction }: { otherauction: any }) {
   // if (otherauction?.data?.length === 0) {
     return (
-      <div className="text-xs font-sans p-8 text-center">
+      <div className="text-xs  p-8 text-center">
         Other Live Auctions will be shown here!!
       </div>
     );

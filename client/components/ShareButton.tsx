@@ -10,8 +10,8 @@ export default function ShareButton({ product }: { product: any }) {
       data={{ text: "AuctionTable", url: shareUrl, title: `${product?.name}` }}
       onClick={() => console.log("shared successfully!")}
     >
-      <span className="mr-1 border border-gray-100 rounded-full p-1 bg-gray-100 hover:bg-gray-500 hover:text-white">
-        <GoShareAndroid />
+      <span className="mr-1 cursor-pointer border border-gray-300 rounded-full p-1 bg-gray-100 hover:bg-gray-300 hover:text-white">
+        <GoShareAndroid size={14} />
       </span>
     </RWebShare>
   );

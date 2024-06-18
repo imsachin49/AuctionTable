@@ -51,21 +51,21 @@ export default function TimeLeft({ product }: { product: ProductProps }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={`flex text-white items-center justify-center p-1 px-3 flex-col rounded-md border ${isHovered ? "border-green-500" : "border-[#929399]"}`}>
-        <div className={`font-normal ${isHovered ? "text-green-500" : "text-[#e1e2e7]"}`}>{time.days}</div>
-        <div className={`text-[8px] ${isHovered ? "text-green-500" : "text-[#e1e2e7]"}`}>Days</div>
+      <div className={`flex text-white items-center justify-center p-1 px-3 flex-col rounded-md border ${isHovered ? "border-indigo-500" : "border-[#929399]"}`}>
+        <div className={`font-normal ${isHovered ? "text-indigo-500" : "text-[#e1e2e7]"}`}>{time.days}</div>
+        <div className={`text-[8px] ${isHovered ? "text-indigo-500" : "text-[#e1e2e7]"}`}>Days</div>
       </div>
-      <div className={`flex text-white items-center justify-center p-1 px-3 flex-col rounded-md border ${isHovered ? "border-green-500" : "border-[#929399]"}`}>
-        <div className={`font-normal ${isHovered ? "text-green-500" : "text-[#e1e2e7]"}`}>{time.hours}</div>
-        <div className={`text-[8px] ${isHovered ? "text-green-500" : "text-[#e1e2e7]"}`}>Hours</div>
+      <div className={`flex text-white items-center justify-center p-1 px-3 flex-col rounded-md border ${isHovered ? "border-indigo-500" : "border-[#929399]"}`}>
+        <div className={`font-normal ${isHovered ? "text-indigo-500" : "text-[#e1e2e7]"}`}>{time.hours}</div>
+        <div className={`text-[8px] ${isHovered ? "text-indigo-500" : "text-[#e1e2e7]"}`}>Hours</div>
       </div>
-      <div className={`flex text-white items-center justify-center p-1 px-3 flex-col rounded-md border ${isHovered ? "border-green-500" : "border-[#929399]"}`}>
-        <div className={`font-normal ${isHovered ? "text-green-500" : "text-[#e1e2e7]"}`}>{time.minutes}</div>
-        <div className={`text-[8px] ${isHovered ? "text-green-500" : "text-[#e1e2e7]"}`}>Minutes</div>
+      <div className={`flex text-white items-center justify-center p-1 px-3 flex-col rounded-md border ${isHovered ? "border-indigo-500" : "border-[#929399]"}`}>
+        <div className={`font-normal ${isHovered ? "text-indigo-500" : "text-[#e1e2e7]"}`}>{time.minutes}</div>
+        <div className={`text-[8px] ${isHovered ? "text-indigo-500" : "text-[#e1e2e7]"}`}>Minutes</div>
       </div>
-      <div className={`flex text-white items-center justify-center p-1 px-3 flex-col rounded-md border ${isHovered ? "border-green-500" : "border-[#929399]"}`}>
-        <div className={`font-normal ${isHovered ? "text-green-500" : "text-[#e1e2e7]"}`}>{time.seconds}</div>
-        <div className={`text-[8px] ${isHovered ? "text-green-500" : "text-[#e1e2e7]"}`}>Seconds</div>
+      <div className={`flex text-white items-center justify-center p-1 px-3 flex-col rounded-md border ${isHovered ? "border-indigo-500" : "border-[#929399]"}`}>
+        <div className={`font-normal ${isHovered ? "text-indigo-500" : "text-[#e1e2e7]"}`}>{time.seconds}</div>
+        <div className={`text-[8px] ${isHovered ? "text-indigo-500" : "text-[#e1e2e7]"}`}>Seconds</div>
       </div>
     </div>
   );

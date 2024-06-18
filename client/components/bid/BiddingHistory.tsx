@@ -22,7 +22,7 @@ export default function BiddingHistory({
   
   if (biddingHistory?.data?.bids?.length === 0) {
     return (
-      <div className="text-xs font-sans p-8 text-center">
+      <div className="text-xs  p-8 text-center">
         No Bidding History Yet!!
       </div>
     );
@@ -53,7 +53,7 @@ export default function BiddingHistory({
                     />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-gray-600 font-semibold sm:font-bold text-xs sm:text-sm font-sans">
+                    <span className="text-gray-600 font-semibold sm:font-bold text-xs sm:text-sm ">
                       {item?.bidderId?.username || "No Name"}
                     </span>
                     <span className="text-xs text-gray-800">

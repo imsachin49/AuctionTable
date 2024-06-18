@@ -120,8 +120,8 @@ const PlaceBid = ({
         Bid Amount : Minimum Bid &nbsp;(+ $20.00)
       </div>
       <div className="relative space-x-1 mt-[3px] mb-4">
-        <div className="text-xs text-gray-500 font-medium w-[40px] bg-[#32c36c] p-[1px] absolute -top-2 rounded-full"></div>
-        <div className="text-xs text-gray-500 font-medium w-[5px] bg-[#32c36c] p-[1px] absolute -top-2 left-10 rounded-full"></div>
+        <div className="text-xs text-gray-500 font-medium w-[40px] bg-indigo-600 p-[1px] absolute -top-2 rounded-full"></div>
+        <div className="text-xs text-gray-500 font-medium w-[5px] bg-indigo-600 p-[1px] absolute -top-2 left-10 rounded-full"></div>
       </div>
       <div className="flex gap-2 flex-wrap">
         <BidAmountInput

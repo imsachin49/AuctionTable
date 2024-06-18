@@ -28,20 +28,20 @@ export default function LongDescription({product}: LongDescriptionProps) {
       <br />
       <div className="flex gap-2 flex-col">
         <div className="text-xs text-gray-800 flex gap-2">
-          <MdOutlineDoneAll className="text-green-500" />
+          <MdOutlineDoneAll className="text-indigo-500" />
           <span>
             Amet consectetur adipisicing elit. Maxime reprehenderit quaerat,
             velit rem atque vel impedit! Expensive Design.{" "}
           </span>
         </div>
         <div className="text-xs text-gray-800 flex gap-2">
-          <MdOutlineDoneAll className="text-green-500" />
+          <MdOutlineDoneAll className="text-indigo-500" />
           <span>
             Consectetur adipisicing elit. Maxime reprehenderit quaerat
           </span>
         </div>
         <div className="text-xs text-gray-800 flex gap-2">
-          <MdOutlineDoneAll className="text-green-500" />
+          <MdOutlineDoneAll className="text-indigo-500" />
           <span>
             Fuga magni veritatis ad temporibus atque adipisci nisi rerum...
           </span>

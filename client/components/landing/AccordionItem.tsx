@@ -26,7 +26,7 @@ export const AccordionItem = ({ title, content }: AccordionItemProps) => {
         onClick={toggleAccordion}
       >
         <div className="flex justify-between items-center">
-          <span className="text-sm sm:text-md text-blue-950 font-sans">
+          <span className="text-sm sm:text-md text-blue-950 ">
             {title}
           </span>
           <span>{isOpen ? <LuMinus /> : <LuPlus />}</span>
@@ -37,7 +37,7 @@ export const AccordionItem = ({ title, content }: AccordionItemProps) => {
         style={{ maxHeight: height }}
         className="overflow-hidden transition-max-height duration-500 ease-in-out"
       >
-        <div className="text-xs sm:text-sm px-4 pb-4 text-blue-900 font-sans">
+        <div className="text-xs sm:text-sm px-4 pb-4 text-blue-900 ">
           {content}
         </div>
       </div>

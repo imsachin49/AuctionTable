@@ -3,7 +3,9 @@ import Link from "next/link";
 import TimeLeft from "./TimeLeft";
 import AuctionStatus from "./AuctionStatus";
 import ShareButton from "./ShareButton";
+import { Exo_2 } from "next/font/google";
 
+const exo = Exo_2({ subsets: ["latin"] });
 interface ProductProps {
   name: string;
   currentPrice: number;
@@ -27,27 +29,22 @@ export default function ProductCard({ product }: { product: ProductProps }) {
         <TimeLeft product={product} />
         <AuctionStatus product={product} />
       </div>
-      <div className="flex flex-col font-sans gap-[5px] p-3 py-2">
-        <div className="text-sm text-gray-950 font-semibold text-start">
-          {product?.name?.slice(0, 40)}
+      <div className="flex flex-col  gap-[10px] p-2 py-2 mt-1">
+        <div className={`${exo.className} font-semibold text-start text-md leading-[17px] text-black transition-all duration-500 group-hover:text-indigo-600`}>
+          {product?.name?.slice(0, 30)}
         </div>
-        <div className="text-[10px] text-zinc-500 font-semibold rounded-md flex gap-1">
-          <div className="text-[12px] text-gray-700 font-normal">
-            Current Bid:{" "}
-            <span className="font-bold text-gray-600 text-md">
-              ${product.currentPrice}.00
-            </span>
+        <div className="text-[10px] text-zinc-500 font-semibold rounded-md gap-1 flex justify-between items-center">
+          <div className={`${exo.className} font-semibold text-lg leading-8 text-indigo-600`}>
+            ${product.currentPrice}.00
           </div>
-        </div>
-        <div className="w-full flex text-sm font-medium mb-3 items-center justify-between mt-1">
-          <Link
-            href={`/items/${product._id}`}
-            className="w-fit border flex items-center justify-center rounded-[4px] px-2 py-[5px] text-xs bg-[#32c36c] hover:bg-green-600 text-gray-100 capitalize font-semibold"
-          >
-            View Details
-          </Link>
           <ShareButton product={product} />
         </div>
+        <Link
+          href={`/items/${product._id}`}
+          className={`${exo.className} w-full border flex items-center justify-center rounded-full my-2 px-2 py-[9px] text-xs bg-indigo-600 hover:bg-indigo-700 text-gray-100 capitalize font-semibold`}
+        >
+          View Details
+        </Link>
       </div>
     </div>
   );

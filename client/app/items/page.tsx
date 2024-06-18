@@ -37,7 +37,7 @@ export default function Page() {
         <div className="w-full flex flex-col items-center">
           <div className="w-full flex items-center justify-center">
             <div className="my-3 w-full">
-              <div className="text-xl sm:text-3xl font-bold font-sans italic text-center">
+              <div className="text-xl sm:text-3xl font-bold text-center">
                 Explore <span className="text-[brown]">Upcoming</span> Auctions
               </div>
               <div className="w-full flex items-center justify-center my-2">
@@ -48,7 +48,7 @@ export default function Page() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     maxLength={50}
                     placeholder="Search for items"
-                    className="border border-gray-300 font-normal px-3 py-3 outline-none rounded-lg italic text-sm pl-[35px] w-full text-gray-800 placeholder:text-gray-600"
+                    className="border border-gray-300 font-normal px-3 py-3 outline-none rounded-lg text-sm pl-[35px] w-full text-gray-800 placeholder:text-gray-600"
                   />
                   <IoIosSearch className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-600" />
                 </div>
@@ -64,7 +64,7 @@ export default function Page() {
             </div>
           ) : notFound ? (
             <div className="w-full flex items-center justify-center h-[100px]">
-              <h1 className="text-2xl font-semibold text-center text-gray-600 italic subpixel-antialiased ">
+              <h1 className="text-2xl font-semibold text-center text-gray-600  subpixel-antialiased ">
                 No items found for Your search term
               </h1>
             </div>

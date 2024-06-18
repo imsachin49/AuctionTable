@@ -52,6 +52,8 @@ const Navbar = () => {
               isDrawerOpen={isDrawerOpen}
               toggleDrawer={toggleDrawer}
               signOut={signOut}
+              isLoggedIn={session?.user ? true : false}
+              pathname={pathname}
             />
           </div>
         </div>
@@ -64,12 +66,12 @@ const Navbar = () => {
               <Link
                 href={item.link}
                 className={`flex items-center flex-col ${
-                  pathname == item.link ? "text-green-400" : "text-gray-500"
+                  pathname == item.link ? "text-indigo-500" : "text-gray-500"
                 }`}
               >
                 {item.icon && <item.icon className="text-md" />}
                 <div
-                  className={`text-[14px] font-semibold capitalize font-sans`}
+                  className={`text-[14px] font-semibold capitalize `}
                 >
                   {item.name}
                 </div>

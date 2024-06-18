@@ -21,7 +21,7 @@ const buttonVariants = cva(
         hot:  "text-gray-800 border border-rose-200 rounded-lg text-sm bg-rose-400 hover:bg-rose-500 text-[#f1f5f9]",
         start:"text-gray-800 border border-cyan-200 rounded-lg text-sm bg-cyan-400 hover:bg-cyan-500 text-[#f1f5f9]",
         end:  "text-gray-800 border border-[#a33434] rounded-lg text-sm bg-[#a33434] hover:bg-[#a33404] text-[#f1f5f9]",
-        bid:  "flex-1 border flex items-center justify-center w-full rounded-[4px] px-3 py-1 text-xs bg-[#32c36c] hover:bg-green-600 text-gray-100 capitalize font-semibold text-nowrap"
+        bid:  "flex-1 border flex items-center justify-center w-full rounded-[4px] px-3 py-1 text-xs bg-indigo-600 hover:bg-indigo-700 text-gray-100 capitalize font-semibold text-nowrap"
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -8,7 +8,7 @@ interface ProductProps {
 
 export default function AuctionStatus({ product }: { product: ProductProps }) {
   const [status, setStatus] = useState("Upcoming");
-  const [stausColor,setstatusColor] = useState("bg-[#32c36c]");
+  const [stausColor,setstatusColor] = useState("bg-indigo-600");
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -24,7 +24,7 @@ export default function AuctionStatus({ product }: { product: ProductProps }) {
         setstatusColor("bg-[#71B7BF]");
       } else {  
         setStatus("Started");
-        setstatusColor("bg-[#32c36c]");
+        setstatusColor("bg-indigo-600");
       }
     };
 

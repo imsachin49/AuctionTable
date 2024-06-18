@@ -4,7 +4,9 @@ import { SessionProviderWrapper } from "@/components/providers/session-provider"
 import { SWRProvider } from "@/components/providers/swr-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import "./globals.css";
+import { Exo_2 } from "next/font/google";
 
+const exo = Exo_2({ subsets: ["latin"] });
 const open = Open_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +21,7 @@ export default function RootLayout({
       <SWRProvider>
         <SocketProvider>
           <html lang="en">
-            <body className={open.className}>{children}</body>
+            <body className={exo.className}>{children}</body>
           </html>
         </SocketProvider>
       </SWRProvider>
