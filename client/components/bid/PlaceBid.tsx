@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useSocket } from "../providers/socket-provider";
-import { LuLoader2 } from "react-icons/lu";
 import { BidAmountInput } from "./PlaceBidForm";
-import { BidConfirmationDialog } from "./BidConfirmationDialog";
 import BidButton from "./PlaceBidButton";
 
 interface ProductProps {
@@ -19,7 +17,7 @@ interface ProductProps {
   };
 }
 
-const PlaceBid = ({ product }: { product: ProductProps }) => {
+const PlaceBid = ({ product, mutate }: { product: ProductProps, mutate: any }) => {
   const [bidAmount, setBidAmount] = useState(product?.data?.currentPrice);
   const { data: session } = useSession();
   const { socket } = useSocket();
@@ -29,29 +27,53 @@ const PlaceBid = ({ product }: { product: ProductProps }) => {
   }, [product?.data]);
 
   const placeBid = () => {
-    try {
-      if (!session) return;
-      if (bidAmount <= product?.data?.currentPrice) {
-        toast.error(
-          "Bid amount should be greater than the current price=" +
-            product?.data?.currentPrice +
-            ",bidAmount=" +
-            bidAmount
-        );
-        return;
-      }
-      if (socket) {
-        socket.emit("bid", {
-          currentPrice: bidAmount,
-          productId: product?.data?._id,
-          userId: session?.user?.id,
-        });
-      } else {
-        toast.error("Socket connection failed!");
-      }
-    } catch (error) {
-      console.error("Error placing bid", error);
-      toast.error("Error placing bid");
+    if (!session) return;
+
+    if (bidAmount <= product?.data?.currentPrice) {
+      toast.error(
+        "Bid amount should be greater than the current price=" +
+        product?.data?.currentPrice +
+        ", bidAmount=" +
+        bidAmount
+      );
+      return;
+    }
+
+    if (socket) {
+      const newBid = {
+        _id: new Date().toISOString(),
+        bidAmount: bidAmount,
+        biddingTime: Date.now(),
+        bidderId: {
+          _id: session.user.id,
+          username: session.user.name,
+          avatar: session.user.image,
+        },
+      };
+
+      mutate(
+        (currentData: any) => {
+          return {
+            ...currentData,
+            data: {
+              ...currentData.data,
+              bids: [newBid, ...currentData.data.bids],
+            },
+          };
+        },
+        false // do not revalidate yet
+      );
+
+      socket.emit("bid", {
+        currentPrice: bidAmount,
+        productId: product?.data?._id,
+        userId: session?.user?.id,
+      });
+
+      // Revalidate after optimistic update
+      mutate();
+    } else {
+      toast.error("Socket connection failed!");
     }
   };
 
@@ -64,17 +86,16 @@ const PlaceBid = ({ product }: { product: ProductProps }) => {
       console.log("A user Connected...");
     };
 
-    const handleBidPlaced = (data: any) => {
-      console.log("Broadcasted message from server", data);
+    const handleBidPlaced = async (data: any) => {
       if (data.data.productId === product.data._id) {
         setBidAmount(data.data.currentPrice);
         toast.success(data?.message);
+        await mutate();
       }
     };
 
     const handleBidRejected = (data: any) => {
       setBidAmount(product?.data?.currentPrice);
-      console.log("Bid rejected message from server");
       toast.error(data?.message);
     };
 
@@ -87,7 +108,7 @@ const PlaceBid = ({ product }: { product: ProductProps }) => {
       socket.off("bidPlaced", handleBidPlaced);
       socket.off("bidRejected", handleBidRejected);
     };
-  }, [socket, product?.data?._id]);
+  }, [socket, product?.data?._id, mutate]);
 
   return (
     <div className="border border-gray-100 p-4 pt-3 w-full rounded-md shadow-md">
@@ -101,7 +122,7 @@ const PlaceBid = ({ product }: { product: ProductProps }) => {
         <div className="text-xs text-gray-500 font-medium w-[40px] bg-[#32c36c] p-[1px] absolute -top-2 rounded-full"></div>
         <div className="text-xs text-gray-500 font-medium w-[5px] bg-[#32c36c] p-[1px] absolute -top-2 left-10 rounded-full"></div>
       </div>
-      <div className="flex gap-2  flex-wrap">
+      <div className="flex gap-2 flex-wrap">
         <BidAmountInput
           bidAmount={bidAmount}
           setBidAmount={setBidAmount}

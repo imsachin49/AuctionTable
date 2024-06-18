@@ -12,33 +12,31 @@ import Footer from "@/components/Footer";
 import ProductImages from "@/components/bid/ProductImages";
 
 export default function Page() {
+  const [timeRemaining, setTimeRemaining] = useState("");
+  
   const pathname = usePathname();
   const productId = pathname.split("/")[2];
-  const router=useRouter();
-  const { data: productData, error, } = useSWR(
+  const router = useRouter();
+  const { data: productData, error } = useSWR(
     productId ? `/api/player/${productId}` : null,
     () => fetchProduct(productId),
     {
-      refreshInterval: 15000, // Refresh every 15 seconds (10000 milliseconds) for making sure the time remaining is accurate
+      refreshInterval: 15000, // Refresh every 15 seconds
     }
   );
-
-  if(productData?.statusCode===404){
+  
+  if (productData?.statusCode === 404) {
     router.push("/404");
   }
-
+  
   const {
     data: biddingHistory,
     error: biddingHistoryError,
+    mutate: mutateBids,
   } = useSWR(
     productId ? `/api/player/${productId}/bids` : null,
-    () => fetchBiddingHistory(productId),
-    {
-      refreshInterval: 10000, // Refresh every 10 seconds (10000 milliseconds)
-    }
+    () => fetchBiddingHistory(productId)
   );
-
-  const [timeRemaining, setTimeRemaining] = useState("");
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
@@ -81,19 +79,13 @@ export default function Page() {
           endTimeString += ` ${endDays} day${endDays !== 1 ? "s" : ""}`;
         }
         if (remainingEndHours > 0) {
-          endTimeString += ` ${remainingEndHours} hour${
-            remainingEndHours !== 1 ? "s" : ""
-          }`;
+          endTimeString += ` ${remainingEndHours} hour${remainingEndHours !== 1 ? "s" : ""}`;
         }
         if (remainingEndMinutes > 0) {
-          endTimeString += ` ${remainingEndMinutes} minute${
-            remainingEndMinutes !== 1 ? "s" : ""
-          }`;
+          endTimeString += ` ${remainingEndMinutes} minute${remainingEndMinutes !== 1 ? "s" : ""}`;
         }
         if (remainingEndSeconds > 0) {
-          endTimeString += ` ${remainingEndSeconds} second${
-            remainingEndSeconds !== 1 ? "s" : ""
-          }`;
+          endTimeString += ` ${remainingEndSeconds} second${remainingEndSeconds !== 1 ? "s" : ""}`;
         }
 
         setTimeRemaining(`Auction ends in ${endTimeString}`);
@@ -126,19 +118,13 @@ export default function Page() {
         timeString += ` ${days} day${days !== 1 ? "s" : ""}`;
       }
       if (remainingHours > 0) {
-        timeString += ` ${remainingHours} hour${
-          remainingHours !== 1 ? "s" : ""
-        }`;
+        timeString += ` ${remainingHours} hour${remainingHours !== 1 ? "s" : ""}`;
       }
       if (remainingMinutes > 0) {
-        timeString += ` ${remainingMinutes} minute${
-          remainingMinutes !== 1 ? "s" : ""
-        }`;
+        timeString += ` ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
       }
       if (remainingSeconds > 0) {
-        timeString += ` ${remainingSeconds} second${
-          remainingSeconds !== 1 ? "s" : ""
-        }`;
+        timeString += ` ${remainingSeconds} second${remainingSeconds !== 1 ? "s" : ""}`;
       }
 
       setTimeRemaining(`The auction will start in ${timeString}`);
@@ -170,7 +156,7 @@ export default function Page() {
                 />
               </div>
               <div className="">
-                <PlaceBid product={productData} />
+                <PlaceBid product={productData} mutate={mutateBids} />
               </div>
             </div>
           </div>
