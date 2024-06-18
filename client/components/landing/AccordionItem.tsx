@@ -37,7 +37,7 @@ export const AccordionItem = ({ title, content }: AccordionItemProps) => {
         style={{ maxHeight: height }}
         className="overflow-hidden transition-max-height duration-500 ease-in-out"
       >
-        <div className="text-xs sm:text-sm px-2 sm:px-4 pb-4 text-blue-900 font-sans">
+        <div className="text-xs sm:text-sm px-4 pb-4 text-blue-900 font-sans">
           {content}
         </div>
       </div>

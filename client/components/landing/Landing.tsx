@@ -19,7 +19,7 @@ export default function Landing() {
           your own for the best price.
         </p>
         <div className="flex gap-4 mt-2 flex-col sm:flex-row">
-          <SellButton />
+          {/* <SellButton /> */}
           <Link
             href="/items"
             className="border px-4 py-3 rounded-md bg-gray-900 hover:bg-gray-800 text-gray-100 flex items-center justify-center gap-1"

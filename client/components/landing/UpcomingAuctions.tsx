@@ -21,8 +21,8 @@ export default function UpcomingAuctions() {
           success and future growth.
         </p>
       </div>
-      <div className="w-full flex items-center justify-center">
-        <div className="flex flex-wrap gap-3 max-w-4xl items-center justify-center">
+      <div className="w-full flex items-center justify-center px-3">
+        <div className="gap-4 max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-[90%]">
           {products?.data?.map((product: any) => (
             <ProductCard key={product._id} product={product} />
           ))}

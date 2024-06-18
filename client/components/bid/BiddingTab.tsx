@@ -13,8 +13,8 @@ export default function BiddingTab({ biddingHistory,product }: any) {
   const { data: otherauction } = useSWR("/api/player/top/ongoing?x=3",getTopXOngoingAuctions);
 
   return (
-    <div className="p-3">
-      <div className="flex gap-1 sm:gap-5 flex-wrap items-center md:justify-start">
+    <div className="sm:p-3 p-2">
+      <div className="flex gap-1 sm:gap-5 flex-wrap items-center md:justify-start [&>*:nth-child(3)]:hidden [&>*:nth-child(3)]:sm:block">
         <TabButton tabId={1} activeTab={tab} setTab={setTab} text="Description" />
         <TabButton tabId={2} activeTab={tab} setTab={setTab} text="Auction History" />
         <TabButton tabId={3} activeTab={tab} setTab={setTab} text="Other Auctions" />

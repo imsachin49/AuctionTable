@@ -8,11 +8,11 @@ import { GrContact } from "react-icons/gr";
 import { CiSettings } from "react-icons/ci";
 
 const sidebarItems = [
-  { name: "Home", icon: GoHome },
-  { name: "Explore", icon: MdOutlineExplore },
-  { name: "Bids", icon: IoIosHeartEmpty },
-  { name: "Profile", icon: FaRegUser },
-  { name: "Contact us", icon: GrContact },
+  { name: "Home", icon: GoHome,link:"/" },
+  { name: "Explore", icon: MdOutlineExplore,link:"/items" },
+  { name: "Contact", icon: GrContact,link:"/contact" },
+  { name: "Profile", icon: FaRegUser,link:"/profile" },
+  // { name: "Bids", icon: IoIosHeartEmpty },
   // { name: "Sold List", icon: GrMoney },
   // { name: "Bid History", icon: LuHistory },
   // { name: "Settings", icon: CiSettings }

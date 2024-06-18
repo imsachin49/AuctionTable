@@ -150,7 +150,7 @@ export default function Page() {
     <>
       <Navbar />
       <div className="flex items-center justify-center">
-        <div className="flex flex-col mx-1 md:mx-4 gap-1 items-center md:items-start justify-start sm:justify-start w-full">
+        <div className="flex flex-col mx-1 md:mx-4 gap-1 items-center md:items-start justify-start sm:justify-start w-full lg:max-w-[80%]">
           <div className="flex h-full px-1 lg:px-3 items-center flex-col md:flex-row mb-5 py-2 w-full gap-2">
             <div className="flex flex-col w-full h-full items-center justify-center max-w-[600px]">
               <ProductImages pictures={productData?.data?.pictures} />
