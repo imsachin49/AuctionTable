@@ -1,10 +1,11 @@
 # AuctionTable: Real-Time Auctions Platform
-    AuctionTable is a real-time auction platform that allows users to participate in live auctions, place bids, and monitor the status of their bids in real-time. The platform is designed to provide a seamless and engaging user experience, with instant updates on bid statuses and dynamic bid adjustments. AuctionTable also features secure authentication, robust security measures, and social sharing capabilities, making it a comprehensive and user-friendly auction solution.
+AuctionTable is a real-time auction platform that allows users to participate in live auctions, place bids, and monitor the status of their bids in real-time. The platform is designed to provide a seamless and engaging user experience, with instant updates on bid statuses and dynamic bid adjustments. AuctionTable also features secure authentication, robust security measures, and social sharing capabilities, making it a comprehensive and user-friendly auction solution.
       
 ## 💡 Key Features:
    - Real-Time Updates
    - Secure Authentication
    - Atomic Operations (DB Transactions)
+   - Optimistic UI Updates
    - Dynamic Bid Adjustments
    - Instant Notifications
    - Seamless User Experience
