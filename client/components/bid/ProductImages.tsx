@@ -1,17 +1,19 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import ProductImagesSkeleton from "../skeletons/ProductImageSkeleton";
 
 interface ProductDetailsCarouselProps {
   pictures: string[];
+  isLoading: boolean;
 }
 
-const ProductImages = ({ pictures }: ProductDetailsCarouselProps) => {
+export default function ProductImages({
+  pictures,
+  isLoading,
+}: ProductDetailsCarouselProps) {
+  if (isLoading) return <ProductImagesSkeleton />;
   const [currentImage, setCurrentImage] = useState<number>(0);
-
-  const handleImageChange = (index: number) => {
-    setCurrentImage(index);
-  };
 
   return (
     <div className="flex gap-2 w-full">
@@ -26,19 +28,19 @@ const ProductImages = ({ pictures }: ProductDetailsCarouselProps) => {
                 ? "border-2 border-[brown]"
                 : "border-2 border-transparent"
             }`}
-            onClick={() => handleImageChange(index)}
+            onClick={() => setCurrentImage(index)}
           />
         ))}
       </div>
       <div className="carousel-container flex justify-center items-center w-full md:max-h-[290px] lg:max-h-[260px]">
         <img
-          src={pictures?.length>0 ? pictures[currentImage] : "/prod-gallery1.png"}
+          src={
+            pictures?.length > 0 ? pictures[currentImage] : "/prod-gallery1.png"
+          }
           alt="currentImage"
           className="w-full h-full object-cover rounded-md"
         />
       </div>
     </div>
   );
-};
-
-export default ProductImages;
+}

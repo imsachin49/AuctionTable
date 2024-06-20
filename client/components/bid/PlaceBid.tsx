@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useSocket } from "../providers/socket-provider";
 import { BidAmountInput } from "./PlaceBidForm";
 import BidButton from "./PlaceBidButton";
+import PlaceBidSkeleton from "../skeletons/PlaceBidSkeleton";
 
 interface ProductProps {
   data: {
@@ -17,13 +18,17 @@ interface ProductProps {
   };
 }
 
-const PlaceBid = ({
+export default function PlaceBid({
   product,
   mutate,
+  isLoading,
 }: {
   product: ProductProps;
   mutate: any;
-}) => {
+  isLoading: boolean;
+}){
+  if (isLoading) return <PlaceBidSkeleton />;
+  
   const [bidAmount, setBidAmount] = useState(product?.data?.currentPrice);
   const { data: session } = useSession();
   const { socket } = useSocket();
@@ -142,5 +147,3 @@ const PlaceBid = ({
     </div>
   );
 };
-
-export default PlaceBid;

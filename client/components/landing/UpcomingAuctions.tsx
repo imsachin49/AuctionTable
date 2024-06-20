@@ -5,13 +5,16 @@ import useSWR from "swr";
 import { getTopXOngoingAuctions } from "@/services/productService";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Exo_2 } from "next/font/google";
+import ProductCardSkeleton from "../skeletons/ProductCardSkeleton";
+import ShowMoreSkeleton from "../skeletons/ShowMoreSkeleton";
 
 const exo = Exo_2({ subsets: ["cyrillic"] });
 export default function UpcomingAuctions() {
-  const { data: products, error } = useSWR(
-    "/api/player/top/ongoing?x=3",
-    getTopXOngoingAuctions
-  );
+  const {
+    data: products,
+    error,
+    isValidating,
+  } = useSWR("/api/player/top/ongoing?x=3", getTopXOngoingAuctions);
   if (error) return <div>Failed to load</div>;
 
   return (
@@ -28,21 +31,29 @@ export default function UpcomingAuctions() {
       </div>
       <div className="w-full flex items-center justify-center px-3">
         <div className="gap-4 max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-[90%]">
-          {products?.data?.map((product: any) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+          {isValidating &&
+            [1, 2, 3].map((i) => <ProductCardSkeleton key={i} />)}
+          {!isValidating &&
+            products?.data?.map((product: any) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
         </div>
       </div>
-      <Link
-        href="/items"
-        className="w-full flex items-center justify-center my-8 text-gray-400 hover:text-gray-600"
-      >
-        <button
-          className={`${exo.className} max-w-4xl text-xs w-[90%] border border-gray-400 hover:border-gray-600 rounded-md items-center text-center p-3 shadow-sm`}
+      {isValidating ? (
+        <ShowMoreSkeleton />
+      ) : (
+        <Link
+          href="/items"
+          className="w-full flex items-center justify-center my-8 text-gray-400 hover:text-gray-600"
         >
-          Show More
-        </button>
-      </Link>
+          <button
+            className={`${exo.className} max-w-4xl text-xs w-[90%] border border-gray-400 hover:border-gray-600 rounded-md items-center text-center p-3 shadow-sm inline-flex justify-center`}
+          >
+            Show More
+            <FaArrowRightLong className="ml-2" />
+          </button>
+        </Link>
+      )}
     </div>
   );
 }

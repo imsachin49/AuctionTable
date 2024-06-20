@@ -17,7 +17,7 @@ export default function Page() {
   const pathname = usePathname();
   const productId = pathname.split("/")[2];
   const router = useRouter();
-  const { data: productData, error } = useSWR(
+  const { data: productData, error,isValidating:isProductLoading } = useSWR(
     productId ? `/api/player/${productId}` : null,
     () => fetchProduct(productId),
     {
@@ -153,23 +153,24 @@ export default function Page() {
         <div className="flex flex-col mx-1 md:mx-4 gap-1 items-center md:items-start justify-start sm:justify-start w-full lg:max-w-[80%]">
           <div className="flex h-full px-1 lg:px-3 items-center flex-col md:flex-row mb-5 py-2 w-full gap-2">
             <div className="flex flex-col w-full h-full items-center justify-center max-w-[600px]">
-              <ProductImages pictures={productData?.data?.pictures} />
+              <ProductImages pictures={productData?.data?.pictures} isLoading={isProductLoading} />
             </div>
             <div className="flex flex-col gap-2 w-full h-full max-w-[610px]">
               <div className="w-full">
                 <BiddingDescription
                   product={productData}
                   timeRemaining={timeRemaining}
+                  isLoading={isProductLoading}
                 />
               </div>
               <div className="">
-                <PlaceBid product={productData} mutate={mutateBids} />
+                <PlaceBid product={productData} mutate={mutateBids} isLoading={isProductLoading} />
               </div>
             </div>
           </div>
 
           <div className="w-full max-w-[610px]">
-            <BiddingTab biddingHistory={biddingHistory} product={productData} />
+            <BiddingTab biddingHistory={biddingHistory} product={productData} isLoading={isProductLoading} />
           </div>
         </div>
       </div>

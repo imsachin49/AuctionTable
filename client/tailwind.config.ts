@@ -19,6 +19,10 @@ const config = {
     },
     extend: {
       keyframes: {
+        "shimmer":{
+          '0%': { backgroundPosition: '-1000px 0' },
+          '100%': { backgroundPosition: '1000px 0' },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -31,6 +35,7 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        shimmer: 'shimmer 2s infinite linear',
       },
       backgroundImage: {
         'banner1': "url('/auction11.avif')",

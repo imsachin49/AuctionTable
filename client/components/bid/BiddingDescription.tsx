@@ -1,4 +1,4 @@
-import React from "react";
+import BiddingDescriptionSkeleton from "../skeletons/BidSescriptionSkeleton";
 
 interface ProductProps {
   product:{
@@ -7,9 +7,12 @@ interface ProductProps {
     }
   };
   timeRemaining: string;
+  isLoading: boolean;
 }
 
-export default function BiddingDescription({product,timeRemaining}: ProductProps) {
+export default function BiddingDescription({product,timeRemaining,isLoading}: ProductProps) {
+  if (isLoading) return <BiddingDescriptionSkeleton />;
+  
   return (
     <div className="w-full flex rounded-lg flex-col gap-2 shadow-md border border-gray-100 p-2 py-3 sm:p-4">
       <span className="font-bold text-lg leading-6 capitalize">{product?.data?.name} auction</span>

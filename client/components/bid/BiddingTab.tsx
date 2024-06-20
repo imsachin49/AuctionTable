@@ -8,12 +8,12 @@ import AuctionReview from "./AuctionReview";
 import useSWR from "swr";
 import { getTopXOngoingAuctions } from "@/services/productService";
 
-export default function BiddingTab({ biddingHistory,product }: any) {
+export default function BiddingTab({ biddingHistory,product,isLoading }: any) {
   const [tab, setTab] = useState<number>(1);
   const { data: otherauction } = useSWR("/api/player/top/ongoing?x=3",getTopXOngoingAuctions);
 
   return (
-    <div className="sm:p-3 p-2">
+    <div className={`sm:p-3 p-2 ${isLoading && "hidden"}`}>
       <div className="flex gap-1 sm:gap-5 flex-wrap items-center md:justify-start [&>*:nth-child(3)]:hidden [&>*:nth-child(3)]:sm:block">
         <TabButton tabId={1} activeTab={tab} setTab={setTab} text="Description" />
         <TabButton tabId={2} activeTab={tab} setTab={setTab} text="Auction History" />

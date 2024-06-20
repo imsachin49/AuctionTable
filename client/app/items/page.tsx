@@ -1,21 +1,23 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useSWR from "swr";
 import { fetchProducts, searchPlayers } from "@/services/productService";
 import Footer from "@/components/Footer";
 import ProductListing from "@/components/ProductListing";
 import { IoIosSearch } from "react-icons/io";
 import useDebounce from "@/hooks/use-debounce";
-import { LuLoader2 } from "react-icons/lu";
 
 export default function Page() {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  const { data: productsData, isValidating: productsLoading } = useSWR("/",fetchProducts, {
-    refreshInterval:  120000,  // refresh every 2 minutes
-  });
+  const { data: productsData, isValidating: productsLoading } = useSWR(
+    "/",
+    fetchProducts,
+    {
+      refreshInterval: 120000, // refresh every 2 minutes
+    }
+  );
   const { data: searchProductsData, isValidating: searchLoading } = useSWR(
     debouncedSearchTerm
       ? `/api/player/search/all?name=${debouncedSearchTerm}`
@@ -28,6 +30,8 @@ export default function Page() {
     !searchLoading &&
     searchProductsData?.data &&
     searchProductsData?.data?.length === 0;
+
+  const isLoading = searchLoading || productsLoading;
 
   return (
     <>
@@ -56,13 +60,7 @@ export default function Page() {
             </div>
           </div>
 
-          {searchLoading || productsLoading ? (
-            <div className="w-full flex items-center justify-center">
-              <div className="text-lg font-bold text-center text-gray-600">
-                <LuLoader2 className="animate-spin text-[#b07d5d] text-4xl" />
-              </div>
-            </div>
-          ) : notFound ? (
+          {notFound ? (
             <div className="w-full flex items-center justify-center h-[100px]">
               <h1 className="text-2xl font-semibold text-center text-gray-600  subpixel-antialiased ">
                 No items found for Your search term
@@ -73,6 +71,7 @@ export default function Page() {
               productsData={
                 searchTerm !== "" ? searchProductsData : productsData
               }
+              isLoading={isLoading}
             />
           )}
         </div>
