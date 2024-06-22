@@ -10,15 +10,16 @@ import { Avatar, AvatarFallback } from "./ui/avatar";
 import Image from "next/image";
 import { Icons } from "./icons";
 import Link from "next/link";
-import { Gem, LogOutIcon } from "lucide-react";
+import { Gem, LogOutIcon, User2Icon } from "lucide-react";
 import { signOut } from "next-auth/react";
 interface UserAccountNavProps {
   email: string | undefined;
   name: string;
   imageUrl: string;
+  id: string;
 }
 
-const UserAccountNav = ({ email, imageUrl, name }: UserAccountNavProps) => {
+const UserAccountNav = ({ email, imageUrl, name,id }: UserAccountNavProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
@@ -57,17 +58,12 @@ const UserAccountNav = ({ email, imageUrl, name }: UserAccountNavProps) => {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild>
-          <Link href="/profile">Profile</Link>
-        </DropdownMenuItem>
-
-        {/* <DropdownMenuItem asChild>
-          <Link href="/pricing">
-            Upgrade <Gem className="text-blue-600 h-4 w-4 ml-1.5" />
+        <DropdownMenuItem className="cursor-pointer">
+          <Link href={`/profile/${id}`} passHref className="flex items-center">
+            <User2Icon className="h-4 w-4 mr-1.5" />
+            <span>Profile</span>
           </Link>
-        </DropdownMenuItem> */}
-
-        {/* <DropdownMenuSeparator /> */}
+        </DropdownMenuItem>
 
         <DropdownMenuItem className="cursor-pointer" onClick={() => signOut()}>
           <LogOutIcon className="h-4 w-4 mr-1.5" />

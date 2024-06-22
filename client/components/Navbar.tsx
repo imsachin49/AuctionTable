@@ -84,6 +84,7 @@ const Navbar = () => {
                 email={session.user.email as string}
                 name={session.user.name as string}
                 imageUrl={session.user.image as string}
+                id={session.user.id as string}
               />
             ) : (
               <LoginButton title="Login" variant="open" />

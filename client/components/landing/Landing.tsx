@@ -1,6 +1,4 @@
-import Link from "next/link";
-import { FaRightLong } from "react-icons/fa6";
-import SellButton from "./SellButton";
+import StartBiddingButton from "../StartBiddingButton";
 
 export default function Landing() {
   return (
@@ -19,14 +17,7 @@ export default function Landing() {
           your own for the best price.
         </p>
         <div className="flex gap-4 mt-2 flex-col sm:flex-row">
-          {/* <SellButton /> */}
-          <Link
-            href="/items"
-            className="border px-4 py-3 rounded-md bg-gray-900 hover:bg-gray-800 text-gray-100 flex items-center justify-center gap-1"
-          >
-            Start Bidding
-            <FaRightLong className="text-white" size={20} />
-          </Link>
+          <StartBiddingButton />
         </div>
       </div>
     </div>
