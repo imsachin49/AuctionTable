@@ -4,7 +4,7 @@ import { Edit2Icon } from "lucide-react";
 import { CiChat1 } from "react-icons/ci";
 import { useSession } from "next-auth/react";
 
-export default function UserBio() {
+export default function UserBio({bidCount}: {bidCount: number}) {
   const { data: session } = useSession();
   
   return (
@@ -31,7 +31,7 @@ export default function UserBio() {
               <strong className="text-black">0</strong> Sold
             </span>
             <span className="text-gray-800 text-xs sm:text-md">
-              <strong className="text-black">00</strong> Bids
+              <strong className="text-black">{bidCount}</strong> Bids
             </span>
             <span className="text-gray-800 text-xs sm:text-md">
               <strong className="text-black">0</strong> Owned

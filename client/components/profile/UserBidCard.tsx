@@ -1,4 +1,4 @@
-export default function UserBidCard() {
+export default function UserBidCard({item}) {
   return (
     <li className="py-3 px-2 rounded-md border border-gray-200">
         <div className="flex items-center">
@@ -9,7 +9,7 @@ export default function UserBidCard() {
             <p className="text-sm font-medium truncate text-gray-800">Product Name</p>
             <p className="text-xs truncate text-gray-500">Sun, 2024 Jun 10:23 PM</p>
         </div>
-        <div className="inline-flex items-center text-base font-semibold text-gray-800">$320</div>
+        <div className="inline-flex items-center text-base font-semibold text-gray-800">${item?.bidAmount}</div>
         </div>
     </li>
   )
