@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { data: session } = useSession();
+  console.log("session====>", session);
   const pathname = usePathname();
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const drawerRef = useRef<HTMLDivElement>(null);
