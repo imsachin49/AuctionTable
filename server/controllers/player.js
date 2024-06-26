@@ -308,10 +308,12 @@ const getAllBidsByBidder = asyncHandler(async (req, res) => {
             return res.status(404).json(new ApiResponse(403, null, "Bids not Found"));
         }
 
+        // res.status(200).json(new ApiResponse(201, players, "Bids Found Successfully"));
+
         // Filter bids to include only those made by the specified bidder
         // FlatMap is used Because we have our bids array inside the players array
         const bidsByBidder =players.flatMap(player => 
-            player.bids.filter(bid => String(bid.bidderId._id) === bidderId)
+            player.bids.filter(bid => bid?.bidderId && String(bid.bidderId._id) === bidderId)
         );
 
         res.status(200).json(new ApiResponse(202, bidsByBidder, "Bids Found Successfully"));
