@@ -192,7 +192,7 @@ const getPlayerById=asyncHandler(async(req,res)=>{
     }
 
     try {
-        const player=await Player.find({_id:req.params.id});
+        const player=await Player.findById(req.params.id);
         if(!player) res.status(404).json(new ApiResponse(404,null,"Player not Found"));
         res.status(200).json(new ApiResponse(201,player,"Player Found SuccessFull"));
     } catch (error) {

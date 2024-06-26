@@ -29,6 +29,8 @@ export default function Page() {
     router.push("/404");
   }
 
+  console.log("productData====>", productData.data[0]);
+
   const {
     data: biddingHistory,
     error: biddingHistoryError,

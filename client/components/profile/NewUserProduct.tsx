@@ -1,6 +1,6 @@
 import UserProducts from "./UserProducts";
 
-export default function NewUserProduct() {
+export default function NewUserProduct({userPlayers,isLoading}:any) {
   return (
     <div className="flex flex-col gap-2">
       <div className="w-full flex items-center gap-2">
@@ -9,7 +9,7 @@ export default function NewUserProduct() {
           Sachin's Recent Products
         </span>
       </div>
-      <UserProducts />
+      <UserProducts userPlayers={userPlayers} isLoading={isLoading} />
     </div>
   );
 }
