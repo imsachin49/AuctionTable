@@ -10,15 +10,15 @@ interface UserProfileProps {
 
 export default function UserProfile({ id }: UserProfileProps) {
   console.log("id====>", id);
-  const {
-    data: userBids,
-    error: userBidError,
-    isValidating: userBidLoading,
-    mutate: mutateUserBids,
-  } = useSWR(id ? `/api/player/${id}/bids/all` : null, () =>
-    getAllBidsByUser(id)
-  );
-  console.log("userBids====>", userBids);
+  // const {
+  //   data: userBids,
+  //   error: userBidError,
+  //   isValidating: userBidLoading,
+  //   mutate: mutateUserBids,
+  // } = useSWR(id ? `/api/player/${id}/bids/all` : null, () =>
+  //   getAllBidsByUser(id)
+  // );
+  // console.log("userBids====>", userBids);
 
   return (
     <div className="w-full max-w-xl flex flex-col gap-4">

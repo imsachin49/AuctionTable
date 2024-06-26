@@ -29,7 +29,9 @@ const handler = NextAuth({
             }
           );
           if (res?.data?.data?.token) {
+            console.log("User token", res.data.data);
             user.token = res.data.data.token;
+            user.id=res.data.data._id;
           }
           return true;
         } else {
