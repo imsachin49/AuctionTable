@@ -53,6 +53,7 @@ const Navbar = () => {
               toggleDrawer={toggleDrawer}
               signOut={signOut}
               isLoggedIn={session?.user ? true : false}
+              profieId={session?.user?.id as string}
               pathname={pathname}
             />
           </div>

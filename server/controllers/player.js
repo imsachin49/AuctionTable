@@ -183,16 +183,16 @@ const updatePlayer = asyncHandler(async (req, res) => {
 
 // get Player by Id
 const getPlayerById=asyncHandler(async(req,res)=>{
+    console.log("req.params.id==>",req.params.id)
     if(!req.params.id){
-        res.status(400).json(new ApiResponse(404, null, "Player ID not Found"));
+        throw new ApiError(401,"Player ID not Found");
     }
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-        // throw new ApiError(401, "Invalid player ID format");
-        res.status(404).json(new ApiResponse(404, null, "Invalid player ID format"));
+        throw new ApiError(401, "Invalid player ID format");
     }
 
     try {
-        const player=await Player.findById(req.params.id);
+        const player=await Player.find({_id:req.params.id});
         if(!player) res.status(404).json(new ApiResponse(404,null,"Player not Found"));
         res.status(200).json(new ApiResponse(201,player,"Player Found SuccessFull"));
     } catch (error) {
@@ -288,6 +288,103 @@ const addPictureaToAllPlayers=asyncHandler(async(req,res)=>{
     }
 });
 
+// get all bids by a bidder on players
+const getAllBidsByBidder = asyncHandler(async (req, res) => {
+    const bidderId = req.params.id;
+    console.log("bidderId==>", bidderId);
+
+    if (!bidderId) {
+        return res.status(400).json(new ApiResponse(404, null, "Bidder ID not Found"));
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(bidderId)) {
+        return res.status(400).json(new ApiResponse(404, null, "Invalid Bidder ID format"));
+    }
+
+    try {
+        const players = await Player.find({ 'bids.bidderId': bidderId }).populate('bids.bidderId');
+
+        if (!players || players.length === 0) {
+            return res.status(404).json(new ApiResponse(403, null, "Bids not Found"));
+        }
+
+        // Filter bids to include only those made by the specified bidder
+        // FlatMap is used Because we have our bids array inside the players array
+        const bidsByBidder =players.flatMap(player => 
+            player.bids.filter(bid => String(bid.bidderId._id) === bidderId)
+        );
+
+        res.status(200).json(new ApiResponse(202, bidsByBidder, "Bids Found Successfully"));
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+});
+
+const getPlayeraWherHighestBidderIsUser = asyncHandler(async (req, res) => {
+    const userId = req.params.id;
+    console.log("User ID:", userId);
+
+    if (!userId) throw new ApiError(401, "User Id not Found");
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json(new ApiResponse(404, null, "Invalid User ID format"));
+    }
+
+    try {
+        // Get players whose bids array is not empty and the endTime has not passed
+        const currentTime = new Date().getTime();
+        console.log("Current Time:", currentTime);
+
+        const players = await Player.find({
+            endTime: { $gt: currentTime },
+            'bids.0': { $exists: true }
+        });
+
+        console.log("Players Found:", players);
+
+        if (!players || players.length === 0) {
+            return res.status(404).json(new ApiResponse(402, null, "Players not Found"));
+        }
+
+        const playersWon = players.filter(player => {
+            console.log("Player:", player);
+
+            // If the player has no bids then the highest bidder is the seller
+            if (player.bids.length === 0) {
+                console.log("No bids for player, checking seller ID");
+                return player.sellerId.toString() === userId;
+            }
+
+            // Get the highest bid
+            const highestBid = player.bids.reduce((prev, current) => (prev.bidAmount > current.bidAmount) ? prev : current);
+            console.log("Highest Bid:", highestBid);
+
+            return highestBid.bidderId.toString() === userId;
+        });
+
+        res.status(200).json(new ApiResponse(201, playersWon, "Players Found Successfully"));
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+});
+
+// get all players where seller is the user
+const getUserPlayers=asyncHandler(async(req,res)=>{
+    const userId=req.params.id;
+    if(!userId) throw new ApiError(401,"User Id not Found");
+    if(!mongoose.Types.ObjectId.isValid(userId)) throw new ApiError(402,"Invalid User ID format");
+    try {
+        const players=await Player.find({sellerId:userId}).select('-bids');
+        if(!players) throw new ApiError(403,"Players not Found");
+        res.status(200).json(new ApiResponse(201,players,"Players Found Successfully"));
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(500,error.message,"Internal Serevr Error");
+    }
+});
+
 module.exports = {
     addNewPlayer,
     deletePlayer,
@@ -298,5 +395,8 @@ module.exports = {
     getAllBidsOfPlayer,
     getTopXOngoingPlayers,
     insertMultiplePlayers,
-    addPictureaToAllPlayers
+    addPictureaToAllPlayers,
+    getAllBidsByBidder,
+    getPlayeraWherHighestBidderIsUser,
+    getUserPlayers
 }

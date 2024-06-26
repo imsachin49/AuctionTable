@@ -24,7 +24,7 @@ export default function UserBio() {
             </h1>
           </div>
           <div className="text-xs sm:text-sm text-gray-700">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. A, alias?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat a rem quam obcaecati molestias expedita?
           </div>
           <div className="flex items-center justify-between max-w-[280px] my-1">
             <span className="text-gray-800 text-xs sm:text-md">

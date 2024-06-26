@@ -9,6 +9,7 @@ export default function NavDrawer({
   toggleDrawer,
   signOut,
   isLoggedIn,
+  profieId,
   pathname,
 }: any) {
   return (
@@ -21,15 +22,14 @@ export default function NavDrawer({
       <div className="py-5 overflow-y-auto mt-4">
         <ul className="space-y-2 font-medium">
           {sidebarItems.map((item, index) => (
-            <Link
-              href={item.link}
+            <SideBarItem
+              item={item}
+              pathname={pathname}
+              index={index}
               key={index}
-              className={`flex items-center p-2 w-full rounded-lg dark:text-white hover:bg-gray-100 group 
-              ${pathname == item.link ? "text-indigo-500" : "text-gray-500"}`}
-            >
-              <item.icon className={`text-xl`} />
-              <span className="ms-3">{item.name}</span>
-            </Link>
+              profieId={profieId}
+              isLoggedIn={isLoggedIn}
+            />
           ))}
           {isLoggedIn && (
             <button
@@ -45,3 +45,31 @@ export default function NavDrawer({
     </div>
   );
 }
+
+const SideBarItem = ({ item, pathname, index, isLoggedIn, profieId }: any) => {
+  if (item.name === "Profile" && isLoggedIn) {
+    return (
+      <Link
+        href={`/profile/${profieId}`}
+        key={index}
+        className={`flex items-center p-2 w-full rounded-lg dark:text-white hover:bg-gray-100 group 
+    ${pathname == item.link ? "text-indigo-500" : "text-gray-500"}`}
+      >
+        <item.icon className={`text-xl`} />
+        <span className="ms-3">{item.name}</span>
+      </Link>
+    );
+  } else {
+    return (
+      <Link
+        href={item.link}
+        key={index}
+        className={`flex items-center p-2 w-full rounded-lg dark:text-white hover:bg-gray-100 group 
+        ${pathname == item.link ? "text-indigo-500" : "text-gray-500"}`}
+      >
+        <item.icon className={`text-xl`} />
+        <span className="ms-3">{item.name}</span>
+      </Link>
+    );
+  }
+};

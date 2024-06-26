@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { Exo_2 } from "next/font/google";
 import Link from "next/link";
-const exo = Exo_2({ subsets: ["latin"] });
 
 interface UserProductCardProps {
   product: any;

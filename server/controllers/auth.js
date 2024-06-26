@@ -78,4 +78,9 @@ const changeUserRole=asyncHandler(async(req,res)=>{
     }
 });
 
-module.exports = {authUser,changeUserRole};
+const getAllUsers=asyncHandler(async(req,res)=>{
+    const users=await User.find();
+    res.status(200).json(new ApiResponse(200,users,"All users fetched successfully"));
+});
+
+module.exports = {authUser,changeUserRole,getAllUsers};
