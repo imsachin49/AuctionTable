@@ -64,3 +64,4 @@ Change the directory to the project folder=> `cd AuctionTable`
 3. Utilise redis for making the Auction more Real-time and Scalable.
 4. Payement by Winner Once Auction Ends & communication via Email/Notification.
 5. Sidebar Pages to be added.
+6. Added a Cron job to ping the server every 10 minutes to prevent cold start/initail load time.
