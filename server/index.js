@@ -32,6 +32,12 @@ app.use('/api/player', playerRoutes);
 // Create HTTP server
 const server = http.createServer(app);
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: err.message });
+});
+
 // Create Socket.IO instance
 const io = socketIo(server, {
     cors: {
