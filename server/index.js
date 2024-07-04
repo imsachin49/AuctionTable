@@ -7,7 +7,7 @@ const socketIo = require('socket.io');
 const cookieParser = require('cookie-parser');
 const { verifySocketUser } = require('./middlewares/verifySocketUser');
 const { connectDB } = require('./db/conn');
-const redisClient = require('./db/redisClient');
+// const redisClient = require('./db/redisClient');
 const { placeBid } = require('./services/bidService');
 
 const authRoutes = require('./routes/auth');
