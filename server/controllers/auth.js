@@ -8,7 +8,7 @@ const { sentOnMail } = require('../utils/sentOnMail');
 require('dotenv').config();
 
 // oAuthUser
-const authUser = asyncHandler(async (req, res) => {
+const authUser = asyncHandler(async (req,res) => {
     const { username, email, provider, providerId, avatar } = req.body;
 
     try {
@@ -29,7 +29,7 @@ const authUser = asyncHandler(async (req, res) => {
                 }
             };
             jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5d' }, (err, token) => {
-                if (err) new ApiError(500, "Error while generating token");
+                if (err) throw new ApiError(500, "Error while generating token");
                 console.log("token=>", token);
                 res.status(200).json(new ApiResponse(200, { token, _id:newUser._id }, "User Logged in Successfully"));
             });
@@ -40,7 +40,7 @@ const authUser = asyncHandler(async (req, res) => {
                 }
             };
             jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5d' }, (err, token) => {
-                if (err) new ApiError(500, "Error while generating token");
+                if (err)  throw new ApiError(500, "Error while generating token");
                 console.log("token=>", token);
                 res.status(200).json(new ApiResponse(200, { token,_id:user._id }, "User Logged in Successfully"));
             });

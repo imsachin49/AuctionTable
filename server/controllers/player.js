@@ -182,7 +182,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
 });
 
 // get Player by Id
-const getPlayerById=asyncHandler(async(req,res)=>{
+const getPlayerById=asyncHandler(async(req, res)=>{
     console.log("req.params.id==>",req.params.id)
     if(!req.params.id){
         throw new ApiError(401,"Player ID not Found");
@@ -217,7 +217,7 @@ const searchPlayer = asyncHandler(async (req, res) => {
 });
 
 // get all bids of a player
-const getAllBidsOfPlayer=asyncHandler(async(req,res)=>{
+const getAllBidsOfPlayer=asyncHandler(async(req, res)=>{
     if(!req.params.id) throw new ApiError(401,"Player Id not Found");
     try {
         const player=await Player.findById(req.params.id);
@@ -234,7 +234,7 @@ const getAllBidsOfPlayer=asyncHandler(async(req,res)=>{
 });
 
 // get top x ongoing players
-const getTopXOngoingPlayers=asyncHandler(async(req,res)=>{
+const getTopXOngoingPlayers=asyncHandler(async(req, res)=>{
     const x=req.query.x;
     try {
         const players=await Player.find({endTime:{$gt:new Date().getTime()}}).sort({currentPrice:-1}).limit(x);
@@ -245,7 +245,7 @@ const getTopXOngoingPlayers=asyncHandler(async(req,res)=>{
     }
 });
 
-const insertMultiplePlayers=asyncHandler(async(req,res)=>{
+const insertMultiplePlayers=asyncHandler(async(req, res)=>{
     const players=req.body;
     try {
         // with players add the current user as the sellerId
@@ -269,7 +269,7 @@ const insertMultiplePlayers=asyncHandler(async(req,res)=>{
 });
 
 // i have to add pictures to all the players by just adding the pictures array to the player object
-const addPictureaToAllPlayers=asyncHandler(async(req,res)=>{
+const addPictureaToAllPlayers=asyncHandler(async(req, res)=>{
     const pictures=req.body.pictures;
     try {
         if(!pictures) throw new ApiError(401,"Pictures not Found");
@@ -373,7 +373,7 @@ const getPlayeraWherHighestBidderIsUser = asyncHandler(async (req, res) => {
 });
 
 // get all players where seller is the user
-const getUserPlayers=asyncHandler(async(req,res)=>{
+const getUserPlayers=asyncHandler(async(req, res)=>{
     const userId=req.params.id;
     if(!userId) throw new ApiError(401,"User Id not Found");
     if(!mongoose.Types.ObjectId.isValid(userId)) throw new ApiError(402,"Invalid User ID format");
