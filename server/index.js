@@ -48,7 +48,7 @@ const io = socketIo(server, {
 
 // Add this middleware function to authenticate Socket.IO connections
 io.use(async (socket, next) => {
-    verifySocketUser(socket, next);
+    verifySocketUser(socket, next)
 });
 
 // Socket.IO event listeners

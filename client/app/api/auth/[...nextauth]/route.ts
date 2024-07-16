@@ -19,8 +19,7 @@ const handler = NextAuth({
       try {
         if (user && account) {
           const res = await axios.post(
-            "https://auctiontable.onrender.com/api/auth/oauth",
-            {
+              process.env.NEXT_PUBLIC_BACKEND_URL+"/api/auth/oauth",{
               email: user.email,
               username: user.name,
               provider: account.provider,
@@ -48,7 +47,10 @@ const handler = NextAuth({
         token.id = user.id;
         token.email = user.email;
         token.token = user.token;
-        token.exp = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 5); // 5 days expiration
+        token.exp = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 1); // 1 days expiration
+        // token.exp = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 5); // 5 days expiration
+        // token.exp = Math.floor(Date.now() / 1000) + (60 * 1); // 3 minutes expiration
+
       }
       return token;
     },
@@ -66,11 +68,15 @@ const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 5, // 5 days
+    maxAge: 60 * 60 * 24 * 1, // 1 days
+    // maxAge: 60 * 60 * 24 * 5, // 5 days
+    // maxAge:60*1,
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
-    maxAge: 60 * 60 * 24 * 5, // 5 days
+    maxAge: 60 * 60 * 24 * 1, // 1 days
+    // maxAge: 60 * 60 * 24 * 5, // 5 days
+    // maxAge:60*1,
   },
 });
 

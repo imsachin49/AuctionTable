@@ -183,7 +183,7 @@ const updatePlayer = asyncHandler(async (req, res) => {
 
 // get Player by Id
 const getPlayerById=asyncHandler(async(req, res)=>{
-    console.log("req.params.id==>",req.params.id)
+    // console.log("req.params.id==>",req.params.id)
     if(!req.params.id){
         throw new ApiError(401,"Player ID not Found");
     }

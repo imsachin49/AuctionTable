@@ -8,7 +8,7 @@ const { sentOnMail } = require('../utils/sentOnMail');
 require('dotenv').config();
 
 // oAuthUser
-const authUser = asyncHandler(async (req,res) => {
+const authUser = asyncHandler(async (req, res) => {
     const { username, email, provider, providerId, avatar } = req.body;
 
     try {
@@ -28,10 +28,10 @@ const authUser = asyncHandler(async (req,res) => {
                     id: newUser._id
                 }
             };
-            jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5d' }, (err, token) => {
+            jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
                 if (err) throw new ApiError(500, "Error while generating token");
                 console.log("token=>", token);
-                res.status(200).json(new ApiResponse(200, { token, _id:newUser._id }, "User Logged in Successfully"));
+                res.status(200).json(new ApiResponse(200, { token, _id: newUser._id }, "User Logged in Successfully"));
             });
         } else {
             const payload = {
@@ -39,10 +39,10 @@ const authUser = asyncHandler(async (req,res) => {
                     id: user._id
                 }
             };
-            jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5d' }, (err, token) => {
-                if (err)  throw new ApiError(500, "Error while generating token");
+            jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
+                if (err) throw new ApiError(500, "Error while generating token");
                 console.log("token=>", token);
-                res.status(200).json(new ApiResponse(200, { token,_id:user._id }, "User Logged in Successfully"));
+                res.status(200).json(new ApiResponse(200, { token, _id: user._id }, "User Logged in Successfully"));
             });
         }
     } catch (error) {
@@ -52,35 +52,37 @@ const authUser = asyncHandler(async (req,res) => {
 });
 
 // change user role.
-const changeUserRole=asyncHandler(async(req,res)=>{
-    const {userId,role}=req.body;
-    if(!userId){
-        throw new ApiError(400,"User id is required");
-    }
-    if(!role){
-        throw new ApiError(400,"Role is required");
-    }
-    
-    if(role!=="admin" && role!=="seller"){
-        throw new ApiError(400,"Role must be admin or seller");
+const changeUserRole = asyncHandler(async (req, res) => {
+    const { userId, role } = req.body;
+
+    if (!userId) {
+        throw new ApiError(400, "User id is required");
     }
 
-    try{
-        const user=await User.findById(userId);
-        if(!user){
-            throw new ApiError(404,"User not found");
+    if (!role) {
+        throw new ApiError(400, "Role is required");
+    }
+
+    if (role !== "admin" && role !== "seller") {
+        throw new ApiError(400, "Role must be admin or seller");
+    }
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            throw new ApiError(404, "User not found");
         }
-        user.role=role;
+        user.role = role;
         await user.save();
-        res.status(200).json(new ApiResponse(200,user,"User role updated successfully"));
-    }catch(error){
-        throw new ApiError(500,error.message || "Internal Server Error");
+        res.status(200).json(new ApiResponse(200, user, "User role updated successfully"));
+    } catch (error) {
+        throw new ApiError(500, error.message || "Internal Server Error");
     }
 });
 
-const getAllUsers=asyncHandler(async(req,res)=>{
-    const users=await User.find();
-    res.status(200).json(new ApiResponse(200,users,"All users fetched successfully"));
+const getAllUsers = asyncHandler(async (req, res) => {
+    const users = await User.find();
+    res.status(200).json(new ApiResponse(200, users, "All users fetched successfully"));
 });
 
-module.exports = {authUser,changeUserRole,getAllUsers};
+module.exports = { authUser, changeUserRole, getAllUsers };

@@ -7,6 +7,7 @@ require('dotenv').config();
 const verifySocketUser = asyncHandler(async (socket, next) => {
     try {
         const token = socket.handshake.auth.token;
+        console.log("tokennn",token)
         if (!token) {
             throw new ApiError(401, 'Unauthorized request');
         }
@@ -15,6 +16,7 @@ const verifySocketUser = asyncHandler(async (socket, next) => {
         if (!user) {
             throw new Error('Invalid access token');
         }
+        console.log("Userrrrrrrrrrrrrrrrrrrrrrrrrr...................")
         socket.user = user;
         next();
     } catch (error) {
