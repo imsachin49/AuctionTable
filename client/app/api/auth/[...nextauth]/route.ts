@@ -31,7 +31,7 @@ const handler = NextAuth({
           if (res?.data?.data?.token) {
             console.log("User token", res.data.data);
             user.token = res.data.data.token;
-            user.id=res.data.data._id;
+            user.id = res.data.data._id;
           }
           return true;
         } else {
@@ -48,13 +48,15 @@ const handler = NextAuth({
         token.id = user.id;
         token.email = user.email;
         token.token = user.token;
+        token.exp = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 5); // 5 days expiration
       }
       return token;
     },
-    async session({ session, user, token }: any) {
+    async session({ session, token }: any) {
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.token = token.token;
+      session.user.exp = token.exp;
       return session;
     },
   },
@@ -62,6 +64,14 @@ const handler = NextAuth({
     signIn: "/auth/signin",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 5, // 5 days
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 60 * 60 * 24 * 5, // 5 days
+  },
 });
 
 export { handler as GET, handler as POST };
