@@ -4,11 +4,13 @@ import { SWRProvider } from "@/components/providers/swr-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import "./globals.css";
 import { Exo_2 } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const exo = Exo_2({ subsets: ["latin"] });
+
 export const metadata: Metadata = {
   title: "AuctionTable",
-  description: "AuctionTable is a one stop solution to all your realtime auction needs"
+  description:"AuctionTable is a one stop solution to all your realtime auction needs",
 };
 
 export default function RootLayout({
@@ -19,6 +21,7 @@ export default function RootLayout({
       <SWRProvider>
         <SocketProvider>
           <html lang="en">
+            <GoogleAnalytics gaId="G-SZBS1NP2S4" />
             <body className={exo.className}>{children}</body>
           </html>
         </SocketProvider>
