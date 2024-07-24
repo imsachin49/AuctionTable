@@ -1,3 +1,4 @@
+"use client";
 import AppImage from "@/components/landing/AppImage";
 import Faqs from "@/components/landing/Faqs";
 import Footer from "@/components/Footer";
@@ -15,7 +16,7 @@ export default function Home() {
       <AppImage />
       <UpcomingAuctions />
       <Faqs />
-      <Footer /> 
+      <Footer />
     </>
   );
 }
