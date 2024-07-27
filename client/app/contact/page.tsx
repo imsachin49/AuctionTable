@@ -13,7 +13,7 @@ const Contact = () => {
             <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
               <div className="mb-12 max-w-[500px] lg:mb-0">
                 <h2 className="mb-1 text-[32px] font-bold uppercase text-dark sm:text-[40px] lg:text-[36px] xl:text-[40px]">
-                  GET IN TOUCH WITH US
+                  Get in touch with us!
                 </h2>
                 <p className="mb-4 text-base leading-relaxed text-body-color">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed

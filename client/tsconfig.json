@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "components/data/bidd.js"
-  ],
+, "app/api/contact/route.js"  ],
   "exclude": ["node_modules"]
 }

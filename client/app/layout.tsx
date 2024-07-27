@@ -10,7 +10,8 @@ const exo = Exo_2({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "AuctionTable",
-  description:"AuctionTable is a one stop solution to all your realtime auction needs",
+  description:
+    "AuctionTable is a one stop solution to all your realtime auction needs",
 };
 
 export default function RootLayout({
